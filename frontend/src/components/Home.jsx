@@ -8,7 +8,7 @@ export default function Home() {
     <div>
       <header className="mt-10">
         <header className="hero font-heading font-bold text-4xl text-center">Welcome to Yorozuya</header>
-        <subheader className="hero font-body text-lg mt-4 text-center flex justify-center -translate-y-7 tracking-widest">House of 1000 jobs</subheader>
+        <div className="hero font-body text-lg mt-4 text-center flex justify-center -translate-y-7 tracking-widest">House of 1000 jobs</div>
        
       </header>
       <img src={yorozuya} alt="hero" className="hero-img w-full h-75 object-cover object-center" />

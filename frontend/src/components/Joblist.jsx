@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 
 
 function JobItem({ job }) {
-    const [isExpanded, setIsExpanded] = useState(false);
-    const description = job.description || "";
+    // const [isExpanded, setIsExpanded] = useState(false);
+    // const description = job.description || "";
 
     return (
         <div className="job-item border-b-2 border-secondary py-2 flex flex-row justify-between items-center">
@@ -11,9 +11,9 @@ function JobItem({ job }) {
                 <img src={job.logo} alt={job.company} className="w-12 h-12 rounded-full object-cover" />
                 <div className="ml-4 mr-10">
                     <p className="font-body text-secondary">{job.company} - {job.location}</p>
-                    <h4 className="font-heading text-2xl text-text">{job.title}</h4>
-
-                    <p className="font-body text-secondary mt-1">
+                    <h4 className="font-body font-bold text-2xl text-text">{job.title}</h4>
+                    <p className="font-body text-accent mt-1">{job.updatedAt}</p>
+                    {/* <p className="font-body text-secondary mt-1">
                         {isExpanded ? description : `${description.slice(0, 50)}...`}
 
                         {description.length > 50 && (
@@ -24,7 +24,7 @@ function JobItem({ job }) {
                                 {isExpanded ? 'Show Less' : 'Show More'}
                             </button>
                         )}
-                    </p>
+                    </p> */}
                 </div>
             </div>
 
