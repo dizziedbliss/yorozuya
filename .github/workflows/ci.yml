@@ -21,7 +21,7 @@ jobs:
         run: |
           docker run \
           -e LOGO_DEV_PUBLIC_KEY="${{secrets.LOGO_DEV_PUBLIC_KEY}}" \
-          yorozuya-backend
+          -d -p 8000:8000 yorozuya-backend
 
       - name: Health check
         run: |
