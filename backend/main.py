@@ -1,7 +1,9 @@
-from fastapi import FastAPI, requests
+import asyncio
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from greenhouse import get_greenhouse_jobs
-from variables import companies
+from services.greenhouse import get_greenhouse_jobs
+from ranking.variables import companies
+
 
 app = FastAPI()
 
@@ -22,14 +24,27 @@ companies = companies
 
 @app.get("/jobs")
 async def get_jobs():
+
+    tasks = [    
+            get_greenhouse_jobs(company)
+            for company in companies        
+    ]
+
+    results = await asyncio.gather(
+        *tasks,
+        return_exceptions=True
+    )
+
     all_jobs = []
 
-    try:
-        for company in companies:
-            jobs = get_greenhouse_jobs(company)
-            all_jobs.extend(jobs)
+    for result in results:
 
-    except Exception as e:
-        print(f"Error fetching jobs from {companies}: {e}")
+        if isinstance(result, Exception):
+            print(result)
+            continue
+
+        all_jobs.extend(result)
+        
+        all_jobs.sort(key=lambda x: x["score"], reverse=True)
 
     return all_jobs

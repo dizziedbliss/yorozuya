@@ -1,6 +1,4 @@
 from datetime import datetime
-import requests
-
 
 def timestamp_to_days_ago(timestamp):
     if not timestamp:

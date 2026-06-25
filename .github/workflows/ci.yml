@@ -1,0 +1,44 @@
+name: Yorozuya CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Building Docker Image
+        run: |
+          cd backend
+          docker buildx build --network=host -t yorozuya-backend .
+
+      - name: Running the container
+        run: |
+          docker run \
+          -e LOGO_DEV_PUBLIC_KEY="${{secrets.LOGO_DEV_PUBLIC_KEY}}" \
+          yorozuya-backend
+
+      - name: Health check
+        run: |
+          sleep 5
+          curl http://localhost:8000/jobs
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: |
+          cd frontend 
+          npm ci 
+          npm run build

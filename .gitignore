@@ -27,3 +27,5 @@ dist-ssr
 .venv
 .env
 __pycache__
+
+.secrets
