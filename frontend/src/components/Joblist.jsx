@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+const API_URL = 
+    import.meta.env.VITE_API_URL ??
+    "http://localhost:8000";
 
 function JobItem({ job }) {
     // const [isExpanded, setIsExpanded] = useState(false);
@@ -46,7 +49,7 @@ export default function Joblist() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:8000/jobs")
+        fetch(`${API_URL}/jobs`)
             .then(res => res.json())
             .then(data => {
                 setJobs(data);
