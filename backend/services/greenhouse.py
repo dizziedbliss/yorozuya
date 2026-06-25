@@ -11,7 +11,6 @@ LOGO_DEV_PUBLIC_KEY = os.getenv('LOGO_DEV_PUBLIC_KEY')
 
 
 async def get_greenhouse_jobs(company):
-    print(f"Fetching {company}")
     url = f"https://api.greenhouse.io/v1/boards/{company}/jobs?content=true"
     async with httpx.AsyncClient() as client:
         response = await client.get(url, timeout=10.0)
@@ -19,7 +18,6 @@ async def get_greenhouse_jobs(company):
     response.raise_for_status()       
        
     data = response.json()
-    print(f"Fetched {company}")
     jobs = []
 
     for job in data.get("jobs",[]):
