@@ -5,8 +5,6 @@ const API_URL =
     "http://localhost:8000";
 
 function JobItem({ job }) {
-    // const [isExpanded, setIsExpanded] = useState(false);
-    // const description = job.description || "";
 
     return (
         <div className="job-item border-b-2 border-secondary py-2 flex flex-row justify-between items-center">
@@ -16,18 +14,6 @@ function JobItem({ job }) {
                     <p className="font-body text-secondary">{job.company} - {job.location}</p>
                     <h4 className="font-body font-bold text-2xl text-text">{job.title}</h4>
                     <p className="font-body text-accent mt-1">{job.updatedAt}</p>
-                    {/* <p className="font-body text-secondary mt-1">
-                        {isExpanded ? description : `${description.slice(0, 50)}...`}
-
-                        {description.length > 50 && (
-                            <button
-                                onClick={() => setIsExpanded(!isExpanded)}
-                                className="text-accent hover:underline font-semibold ml-2 cursor-pointer text-sm"
-                            >
-                                {isExpanded ? 'Show Less' : 'Show More'}
-                            </button>
-                        )}
-                    </p> */}
                 </div>
             </div>
 

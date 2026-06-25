@@ -49,3 +49,7 @@ async def get_jobs():
         all_jobs.sort(key=lambda x: x["score"], reverse=True)
 
     return all_jobs
+
+@app.get("/ping")
+async def ping():
+    return {"status": "alive"}
