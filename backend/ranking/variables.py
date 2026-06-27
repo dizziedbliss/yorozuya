@@ -5,7 +5,6 @@ companies = [
     "Postman",
     "Vercel",
     "Cloudflare",
-    "Datadog",
     "Elastic",
     "MongoDB",
     "Figma",
@@ -13,4 +12,9 @@ companies = [
     "Discord",
     "Reddit",
     "Anthropic",
+    "Duolingo",
+    "Pinterest",
+    "Medium",
+    "webflow",
+    "stripe",
 ]
