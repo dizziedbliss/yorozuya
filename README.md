@@ -4,7 +4,7 @@ Yorozuya is my personal job portal / playground project built because I *hate* L
 
 So I made my own thing: customizable, easy for **me** to fetch jobs and stay updated, without dealing with the usual job-app ass experience.
 
-**Live:** https://yorozuya.dizziedbliss.dev  
+**Live:** https://yorozuya.dizziedbliss.lol  
 
 > Heads-up: first load can take ~10s because it has to go to the serverless Railway thing and kick its ass to wake up from sleep. (No loading animation yet. Yeah. I know.)
 > 
