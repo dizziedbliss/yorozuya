@@ -10,7 +10,7 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://yorozuya.dizziedbliss.lol"
+    "https://yorozuya.dizziedbliss.lol",
     "https://yorozuya-rho.vercel.app"
 ]
 
@@ -21,8 +21,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-companies = companies
 
 @app.get("/jobs")
 async def get_jobs():
@@ -46,7 +44,7 @@ async def get_jobs():
             continue
 
         all_jobs.extend(result)
-        
-        all_jobs.sort(key=lambda x: x["score"], reverse=True)
+
+    all_jobs.sort(key=lambda x: x["score"], reverse=True)
 
     return all_jobs

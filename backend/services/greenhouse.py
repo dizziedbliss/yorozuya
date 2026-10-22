@@ -22,18 +22,17 @@ async def get_greenhouse_jobs(company):
 
     for job in data.get("jobs",[]):
         
-        score = 0
-        
-        score = calculate_score(job.get("title", "").lower(), job.get("content", "").lower())
+        score = calculate_score((job.get("title") or "").lower(), (job.get("content") or "").lower())
         
         if score > 0:
+            days = timestamp_to_days_ago(job.get('updated_at'))
             jobs.append({
                 "title": job.get("title"),
                 "company": company,
-                "location": job.get("location", {}).get("name"),
+                "location": (job.get("location") or {}).get("name"),
                 "applicationLink": job.get("absolute_url"),
                 "logo":  f"https://img.logo.dev/name/{company}?token={LOGO_DEV_PUBLIC_KEY}",
-                "updatedAt": f"{timestamp_to_days_ago(job.get('updated_at'))} days ago",
+                "updatedAt": f"{days} days ago" if days is not None else None,
                 "score": score
             })
         

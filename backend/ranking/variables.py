@@ -15,6 +15,5 @@ companies = [
     "Duolingo",
     "Pinterest",
     "Medium",
-    "webflow",
     "stripe",
 ]
