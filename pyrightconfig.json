@@ -1,6 +1,15 @@
 {
   "venvPath": "backend",
   "venv": ".venv",
-  "exclude": ["backend/.venv", "backend/alembic/versions", "frontend"],
-  "executionEnvironments": [{ "root": "backend" }]
+  "exclude": [
+    "backend/.venv",
+    "backend/alembic/versions",
+    "frontend"
+  ],
+  "executionEnvironments": [
+    {
+      "root": "backend"
+    }
+  ],
+  "pythonVersion": "3.14"
 }

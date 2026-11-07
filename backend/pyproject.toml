@@ -40,6 +40,7 @@ select = ["E", "F", "I", "B", "UP", "FAST"]
 "tests/**" = ["E501"]
 
 [tool.pyright]
+pythonVersion = "3.14"
 venvPath = "."
 venv = ".venv"
 exclude = [".venv", "alembic/versions"]
