@@ -8,6 +8,7 @@
 - Lint and format: `uv run ruff check --fix . && uv run ruff format .`
 - Dev server: `DATABASE_URL=postgresql://yorozuya:yorozuya@127.0.0.1:5433/yorozuya SITE_PASSPHRASE=local-dev uv run uvicorn main:app --reload`
 - Migrate: `DATABASE_URL=… uv run alembic upgrade head`
+- Quotas to respect while testing by hand: JSearch 200/month, Hunter 50 searches/month.
 - Refresh run (all sources, live): `DATABASE_URL=… uv run python -m worker.refresh`; skip some with
   `SKIP_SOURCES=jobspy:linkedin,jsearch` (JSearch has 200 requests/month: don't burn them testing).
 - New migration: change `models.py`, then
@@ -26,6 +27,11 @@
 - `sources/`: one adapter per board, all `fetch(client, settings) -> SourceResult` (`sources/base.py`).
   `ats.py` (Greenhouse, Lever, Ashby, Workable, SmartRecruiters), `boards.py` (Remotive, RemoteOK,
   Himalayas, Arbeitnow), `jsearch.py`, `jobspy_source.py` (LinkedIn, Indeed, Naukri), `fx.py`.
+- `routers/fresher.py`: the job list (filters), one job, status, and `POST …/find-hr`. `routers/settings.py`
+  (editable keys only), `routers/logs.py` (run history for the Logs page).
+- `hr/finder.py`: emails in the posting → Hunter (`department=hr`) → guessed role addresses at a domain
+  with MX. Results cached per company in `hr_contacts`; misses in `hr_lookup_misses` for `retry_days`.
+- `notify/telegram.py`: the end-of-run ping; `worker/refresh.py` logs its outcome as a `telegram` run line.
 - `pipeline/refresh.py` runs one refresh (fetch all → score → upsert → expire → log to
   `run_sources`); `worker/refresh.py` is its CLI, run every 6h by `.github/workflows/refresh.yml`.
 
@@ -53,4 +59,4 @@
   is encoded twice: you store a JSON *string*, not an object (bit migration 0002 once).
 
 ## Not built
-- `/fresher/*`, HR finder, settings and logs APIs, Telegram pings.
+- Apollo: its free plan has no API access to people search, so it isn't in the HR finder.

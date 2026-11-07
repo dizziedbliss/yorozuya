@@ -24,4 +24,4 @@ for a hand-picked list) and **Fresher** (DB-backed hunt for intern/new-grad role
   keep it that way.
 
 ## Not built
-- Fresher-mode API, HR finder, Telegram ping, and the poster UI. The plan lives outside the repo.
+- The poster UI for fresher mode (the API is built). The plan lives outside the repo.

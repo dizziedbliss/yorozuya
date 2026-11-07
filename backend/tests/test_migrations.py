@@ -54,3 +54,4 @@ def test_default_settings_are_seeded_as_json_objects(database_url):
 
     assert kinds and set(kinds.values()) == {"object"}
     assert queries == 10
+    assert {"hr", "email_template"} <= set(kinds)
