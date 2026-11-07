@@ -7,6 +7,7 @@ for a hand-picked list) and **Fresher** (DB-backed hunt for intern/new-grad role
 ## Layout
 - `backend/`: FastAPI + SQLAlchemy 2 + Alembic, Python 3.14, managed with uv. Deployed on Railway.
 - `frontend/`: React 19 + Vite + Tailwind v4. Deployed on Vercel (yorozuya.dizziedbliss.lol).
+- `.github/workflows/refresh.yml`: the fresher refresh every 6h (and "Run workflow" by hand).
 - `compose.yaml`: local Postgres (`127.0.0.1:5433`) and the API (`127.0.0.1:8000`, passphrase
   `local-dev`). Production DB is Supabase.
 
@@ -21,5 +22,4 @@ for a hand-picked list) and **Fresher** (DB-backed hunt for intern/new-grad role
   keep it that way.
 
 ## Not built
-- Fresher-mode sources, refresh worker, HR finder, Telegram ping, and the poster UI. The plan lives
-  outside the repo.
+- Fresher-mode API, HR finder, Telegram ping, and the poster UI. The plan lives outside the repo.

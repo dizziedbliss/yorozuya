@@ -18,3 +18,36 @@ def database_url() -> str:
         conn.execute(f"DROP DATABASE IF EXISTS {TEST_DB} WITH (FORCE)")
         conn.execute(f"CREATE DATABASE {TEST_DB}")
     return TEST_DATABASE_URL
+
+
+@pytest.fixture(scope="session")
+def migrated_url(database_url) -> str:
+    from alembic.config import Config
+
+    from alembic import command
+
+    cfg = Config("alembic.ini")
+    cfg.set_main_option("sqlalchemy.url", database_url)
+    command.upgrade(cfg, "head")
+    return database_url
+
+
+@pytest.fixture
+def db_engine(migrated_url):
+    """The migrated test DB with every table emptied (alembic_version kept)."""
+    from sqlalchemy import create_engine, text
+
+    engine = create_engine(migrated_url)
+    with engine.begin() as conn:
+        tables = (
+            conn.execute(
+                text(
+                    "SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename <> 'alembic_version'"
+                )
+            )
+            .scalars()
+            .all()
+        )
+        conn.execute(text(f"TRUNCATE {', '.join(tables)} RESTART IDENTITY CASCADE"))
+    yield engine
+    engine.dispose()

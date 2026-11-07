@@ -1,6 +1,6 @@
 import pytest
 
-from pipeline.normalize import dedupe_key, normalize_salary
+from pipeline.normalize import dedupe_key, normalize_salary, parse_salary_text
 
 RATES = {"USD": 88.0, "EUR": 95.0}
 
@@ -41,3 +41,22 @@ def test_remote_variants_share_a_key_but_different_roles_or_cities_do_not():
     assert dedupe_key("Postman", "SRE Intern", "Bengaluru") != dedupe_key(
         "Postman", "Backend Intern", "Bengaluru"
     )
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("$25k - $35k", (25_000, 35_000, "USD", "yearly")),
+        ("$80,000 - $100,000 per year", (80_000, 100_000, "USD", "yearly")),
+        ("₹6-8 LPA", (600_000, 800_000, "INR", "yearly")),
+        ("INR 30,000/month", (30_000, None, "INR", "monthly")),
+        ("€50k", (50_000, None, "EUR", "yearly")),
+        ("$45/hr", (45, None, "USD", "hourly")),
+        ("$60k, needs 2 years", (60_000, None, "USD", "yearly")),
+        ("Rs. 25,000 per month", (25_000, None, "INR", "monthly")),
+        ("Competitive", None),
+        ("", None),
+    ],
+)
+def test_salary_text_is_parsed_into_numbers_currency_and_period(text, expected):
+    assert parse_salary_text(text) == expected

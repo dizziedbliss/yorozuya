@@ -1,0 +1,89 @@
+{
+ "id": "744000160306729",
+ "name": "Mid-Market Account Executive",
+ "uuid": "6a1e9971-ad97-4c47-bc23-2a02a7266847",
+ "jobId": "d39850b0-1662-41dd-ba3c-f2cd5c917a60",
+ "jobAdId": "9e354521-82fb-4a66-8433-4a2ddfba6597",
+ "defaultJobAd": false,
+ "refNumber": "REF8777V",
+ "company": {
+  "name": "Freshworks",
+  "identifier": "Freshworks"
+ },
+ "location": {
+  "city": "San Mateo",
+  "region": "CA",
+  "country": "us",
+  "remote": false,
+  "hybrid": true,
+  "hybridDescription": "3x/week onsite (Tues-Thurs)",
+  "latitude": "37.5629917",
+  "longitude": "-122.3255254",
+  "fullLocation": "San Mateo, CA, United States"
+ },
+ "customField": [
+  {
+   "fieldId": "618bba30fa9dfa25d877c58b",
+   "fieldLabel": "Brands",
+   "valueId": "default",
+   "valueLabel": "Freshworks"
+  },
+  {
+   "fieldId": "COUNTRY",
+   "fieldLabel": "Country/Region",
+   "valueId": "us",
+   "valueLabel": "United States"
+  }
+ ],
+ "releasedDate": "2026-11-06T22:13:23.386Z",
+ "creator": {
+  "name": "",
+  "avatarUrl": ""
+ },
+ "postingUrl": "https://jobs.smartrecruiters.com/Freshworks/744000160306729-mid-market-account-executive",
+ "applyUrl": "https://jobs.smartrecruiters.com/Freshworks/744000160306729-mid-market-account-executive?oga=true",
+ "referralUrl": "https://jobs.smartrecruiters.com/external-referrals/company/Freshworks/publication/6a1e9971-ad97-4c47-bc23-2a02a7266847?dcr_ci=Freshworks",
+ "jobAd": {
+  "sections": {
+   "companyDescription": {
+    "title": "Company Description",
+    "text": "<p>Organizations everywhere struggle under the crushing costs and complexities of “solutions” that promise to simplify their lives. To create a better experience for their customers and employees. To help them grow. Software is a choice that can make or break a business. Create better or worse experiences. Propel or throttle growth. Business software has become a blocker instead of ways to get work done.</p><p><em><strong>There’s another option. Freshworks. With a fresh vision for how the world works.</strong></em></p><p>At Freshworks, we build uncomplicated service software that delivers exceptional customer and employee experiences. Our enterprise-grade solutions are powerful, yet easy to use, and quick to deliver results. Our people-first approach to AI eliminates friction, making employees more effective and organizations more productive. Over 72,000 companies, including Bridgestone, New Balance, Nucor, S&amp;P Global, and Sony Music, trust Freshworks’ customer experience (CX) and employee experience (EX) software to fuel customer loyalty and service efficiency. And, over 4,500 Freshworks employees make this possible, all around the world.</p><p><em><strong>Fresh vision. Real impact. Come build it with us.</strong></em></p>"
+   },
+   "jobDescription": {
+    "title": "Job Description",
+    "text": "<p>Freshworks has officially crossed $1B in Annual Recurring Revenue (ARR), combining the scale and stability of an established SaaS leader with the growth opportunities, innovation, and momentum of a company continuing to expand.&#xa0;</p><p>We're looking for a driven, consultative Mid-Market Account Executive to join our growing sales team in our San Mateo office. You'll own the full sales cycle, build relationships with prospective customers, and help organizations modernize their IT and customer experience operations.&#xa0;</p><p>In this role, you'll sell to mid-market organizations with approximately 500-1,000 employees, managing a portfolio of prospective accounts and closing opportunities that typically range from $25K - $40K in annual contract value, with larger six-figure deals possible. You'll take ownership of building and advancing your pipeline through strategic prospecting, consultative selling, and strong customer relationships, while leveraging Freshworks' expanding product portfolio to create new business opportunities.&#xa0;</p><p><strong>What You'll Do&#xa0;</strong></p><ul><li><strong>Own the Full Sales Cycle:&#xa0;</strong>Manage opportunities from prospecting and discovery through solution development, negotiation, and close, consistently driving new business revenue.&#xa0;</li><li><strong>Build and Convert Pipeline:&#xa0;</strong>Proactively identify and engage prospective customers, develop new business opportunities, and leverage internal resources to build a healthy, qualified pipeline.&#xa0;</li><li><strong>Lead Consultative Sales Conversations:&#xa0;</strong>Understand customer challenges, uncover business needs, and build compelling business cases that demonstrate the value of Freshworks solutions.&#xa0;</li><li><strong>Navigate Multiple Stakeholders:&#xa0;</strong>Build relationships with IT leaders, business decision-makers, and executive stakeholders to move opportunities forward and drive successful outcomes.&#xa0;</li><li><strong>Engage Customer Directly:&#xa0;</strong>Combine virtual selling with in-person customer meetings to strengthen relationships and advance strategic opportunities.&#xa0;</li><li><strong>Collaborate Across Teams:&#xa0;</strong>Partner with Solutions Engineering, Marketing, and internal stakeholders to deliver effective sales strategies and customer experiences.&#xa0;</li><li><strong>Own Your Results:&#xa0;</strong>Maintain a healthy pipeline, accurately forecast revenue, and consistently execute against sales targets.&#xa0;</li></ul>"
+   },
+   "qualifications": {
+    "title": "Qualifications",
+    "text": "<ul><li><p><strong>What You'll Bring&#xa0;</strong></p></li><li><strong>3-5+ years of full-cycle closing experience</strong>&#xa0;in B2B SaaS sales, with a demonstrated history of meeting or exceeding quota</li><li><strong>Strong Sales Fundamentals:&#xa0;</strong>Proven ability to prospect, lead discovery, manage objections, negotiate, and close new business</li><li><strong>Consultative Selling Skills:&#xa0;</strong>Ability to understand customer challenges, articulate business value, and navigate multiple stakeholders throughout the sales process</li><li><strong>Pipeline Generation Mindset:&#xa0;</strong>You're proactive about building opportunities and comfortable balancing inbound leads with outbound prospecting&#xa0;</li><li><strong>Ownership &amp; Drive:&#xa0;</strong>You're competitive, resourceful, and thrive in a fast-paced environment where accountability, execution, and results matter&#xa0;</li><li><strong>Collaborative Approach:&#xa0;</strong>You work effectively with internal teams and bring curiosity, energy, and a willingness to continuously improve</li></ul>"
+   },
+   "additionalInformation": {
+    "title": "Additional Information",
+    "text": "<p><strong>Please note this is a hybrid role with onsite expectations of 3x/week (Tuesday - Thursday) from our San Mateo, CA headquarters.</strong></p><p><strong>Compensation &amp; Benefits:&#xa0;</strong></p><ul><li><strong>On-Target Earnings (OTE): $200,000 - $300,000,&#xa0;</strong>inclusive of base salary and target variable compensation (50/50 split)</li><li><strong>Earning Potential:&#xa0;</strong>Opportunity to earn additional compensation through performance-based commission accelerators&#xa0;</li><li><strong>Comprehensive Benefits:&#xa0;</strong>Medical, dental, vision, equity opportunities, and paid time off</li></ul><div sr-tagline=\"\"></div><p>At Freshworks, we have fostered an environment that enables everyone to find their true potential, purpose, and passion, welcoming colleagues of all backgrounds, genders, sexual orientations, religions, and ethnicities. We are committed to providing equal opportunity and believe that diversity in the workplace creates a more vibrant, richer environment that boosts the goals of our employees, communities, and business. <strong>Fresh vision. Real impact. Come build it with us.</strong></p>"
+   }
+  }
+ },
+ "active": true,
+ "visibility": "PUBLIC",
+ "industry": {
+  "id": "it_and_services",
+  "label": "Information Technology And Services"
+ },
+ "function": {
+  "id": "sales",
+  "label": "Sales"
+ },
+ "experienceLevel": {
+  "id": "associate",
+  "label": "Associate"
+ },
+ "typeOfEmployment": {
+  "id": "permanent",
+  "label": "Full-time"
+ },
+ "language": {
+  "code": "en",
+  "label": "English",
+  "labelNative": "English (US)"
+ }
+}

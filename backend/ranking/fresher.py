@@ -42,14 +42,24 @@ def _techs(description: str) -> list[tuple[str, int]]:
     return found
 
 
+def title_is_my_role(title: str) -> bool:
+    """Cheap pre-filter for sources where fetching a description costs a request."""
+    t = title.lower()
+    return (
+        not re.search(w.TOO_SENIOR_TITLE, t)
+        and not re.search(w.NOT_MY_ROLE_TITLE, t)
+        and bool(_hits(w.ROLE_TITLE, t))
+    )
+
+
 def score_fresher(title: str, description: str, location: str | None) -> FresherScore:
     t = title.lower()
+    role_hits = _hits(w.ROLE_TITLE, t)
+    if not role_hits or re.search(w.NOT_MY_ROLE_TITLE, t):
+        return FresherScore(score=0, dropped="not my role")
+
     if re.search(w.TOO_SENIOR_TITLE, t):
         return FresherScore(score=0, dropped="too senior")
-
-    role_hits = _hits(w.ROLE_TITLE, t)
-    if not role_hits:
-        return FresherScore(score=0, dropped="not my role")
 
     if not _location_ok(location):
         return FresherScore(score=0, dropped="wrong city")
@@ -72,6 +82,9 @@ def score_fresher(title: str, description: str, location: str | None) -> Fresher
             score += weight
 
     techs = _techs(description)
-    score += sum(weight for _, weight in techs)
+    score += min(sum(weight for _, weight in techs), w.TECH_SCORE_CAP)
+
+    loc = (location or "").strip().lower()
+    score += next((bonus for pattern, bonus in w.LOCATION_BONUS if re.search(pattern, loc)), 0)
 
     return FresherScore(score=score, matched=matched, techs=[label for label, _ in techs])

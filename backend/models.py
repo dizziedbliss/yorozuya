@@ -81,6 +81,8 @@ class JobSource(Base):
     job_id: Mapped[int] = mapped_column(ForeignKey("jobs.id", ondelete="CASCADE"), primary_key=True)
     source: Mapped[str] = mapped_column(Text, primary_key=True)
     external_id: Mapped[str] = mapped_column(Text, primary_key=True)
+    # Set when the source lists *every* job in this scope ("greenhouse:gitlab"); see sources/base.py.
+    scope: Mapped[str | None] = mapped_column(Text, index=True)
     url: Mapped[str | None] = mapped_column(Text)
     seen_at: Mapped[datetime] = mapped_column(server_default=NOW)
 

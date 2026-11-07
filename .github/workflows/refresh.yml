@@ -1,0 +1,42 @@
+name: Refresh jobs
+
+on:
+  schedule:
+    - cron: "17 */6 * * *" # every 6h, off the top of the hour when GitHub's queue is busiest
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: refresh-jobs
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    defaults:
+      run:
+        working-directory: backend
+
+    env:
+      # Supabase *session pooler* URL: the direct db.<ref>.supabase.co host is IPv6-only, runners aren't.
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+      TRIGGER: ${{ github.event_name == 'schedule' && 'cron' || 'manual' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v7
+
+      - name: Install
+        run: uv sync --frozen --no-dev
+
+      - name: Migrate
+        run: uv run alembic upgrade head
+
+      - name: Refresh
+        run: uv run python -m worker.refresh --trigger "$TRIGGER"
