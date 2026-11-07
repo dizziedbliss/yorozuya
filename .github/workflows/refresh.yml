@@ -21,22 +21,25 @@ jobs:
       run:
         working-directory: backend
 
-    env:
-      # Supabase *session pooler* URL: the direct db.<ref>.supabase.co host is IPv6-only, runners aren't.
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-      TRIGGER: ${{ github.event_name == 'schedule' && 'cron' || 'manual' }}
-
     steps:
-      - uses: actions/checkout@v4
+      # Actions pinned to commit SHAs; secrets only reach the steps that need them.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
 
       - name: Install
         run: uv sync --frozen --no-dev
 
+      # DATABASE_URL is Supabase's *session pooler* URL: the direct db.<ref>.supabase.co host is
+      # IPv6-only, and GitHub runners have no IPv6.
       - name: Migrate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: uv run alembic upgrade head
 
       - name: Refresh
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          TRIGGER: ${{ github.event_name == 'schedule' && 'cron' || 'manual' }}
         run: uv run python -m worker.refresh --trigger "$TRIGGER"
