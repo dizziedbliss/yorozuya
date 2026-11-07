@@ -18,6 +18,8 @@ for a hand-picked list) and **Fresher** (DB-backed hunt for intern/new-grad role
 
 ## Rules
 - Frontend code is TypeScript only (strict). No new `.js`/`.jsx`.
+- GitHub Actions: pin every `uses:` to a full commit SHA with the version in a comment, and give secrets
+  to the steps that need them, never job-wide.
 - Never commit `backend/.env` or `backend/.secrets`. `backend/.dockerignore` keeps them out of the image;
   keep it that way.
 
