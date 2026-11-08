@@ -4,13 +4,11 @@ import { Link, useParams } from "react-router";
 import { useToast } from "../components/toast-context";
 import { api } from "../lib/api";
 import { COPY } from "../lib/copy";
-import { composeUrl, fillTemplate } from "../lib/gmail";
+import { composeUrl, fillTemplate, savedTemplate } from "../lib/gmail";
 import { type Flag, findFlags, parseJd } from "../lib/jd";
 import { burst, useParallax } from "../lib/motion";
 import { type HrContact, type JobDetail, SENT, type Status } from "../lib/types";
 import "../styles/poster.css";
-
-const DEFAULT_TEMPLATE = { subject: "{role} application", body: "Hi {hr_name},\n\nI'd love to be considered for the {role} role at {company} ({job_link}).\n\nThanks,\nAdithya" };
 
 export function JobPoster() {
   const id = Number(useParams().id);
@@ -53,7 +51,7 @@ export function JobPoster() {
   const count = (tone: Flag["tone"]) => flags.filter((f) => f.tone === tone).length;
   const verdict = count("red") === 0 && count("green") >= 1 ? COPY.poster.verdict.clean : count("red") > count("green") ? COPY.poster.verdict.caution : COPY.poster.verdict.mixed;
   const maxPart = Math.max(1, ...j.breakdown.map((p) => Math.abs(p.points)));
-  const template = (settings.data?.email_template as typeof DEFAULT_TEMPLATE | undefined) ?? DEFAULT_TEMPLATE;
+  const template = savedTemplate(settings.data);
   const contacts = hr.data?.contacts ?? j.hr_contacts;
   const best: HrContact | undefined = contacts[0];
   const firstName = best?.name?.split(/\s+/)[0];

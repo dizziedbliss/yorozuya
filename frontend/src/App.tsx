@@ -8,6 +8,7 @@ import { Fresher } from "./pages/Fresher";
 import { JobPoster } from "./pages/JobPoster";
 import { Log } from "./pages/Log";
 import { Receipts } from "./pages/Receipts";
+import { Settings } from "./pages/Settings";
 import { Soon } from "./pages/Soon";
 
 const PAGE_OF: Record<string, string> = { "": "fresher", jobs: "poster", receipts: "receipts", log: "log", curated: "curated", settings: "settings" };
@@ -42,7 +43,7 @@ export function App() {
             <Route path="receipts" element={<Receipts />} />
             <Route path="log" element={<Log />} />
             <Route path="curated" element={<Soon what="Curated" />} />
-            <Route path="settings" element={<Soon what="Settings" />} />
+            <Route path="settings" element={<Settings />} />
             <Route path="*" element={<Soon what="This page" lost />} />
           </Routes>
         </main>
