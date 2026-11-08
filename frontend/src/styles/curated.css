@@ -1,0 +1,38 @@
+/* Curated: Hyderabad-style poster, one orange sun. The ranked list is a plain, readable timetable. */
+
+.cposter { position: relative; overflow: hidden; isolation: isolate; min-height: clamp(280px, 38vw, 460px); display: grid; align-content: end; padding-block: 28px 26px; border-bottom: 2px solid var(--line) }
+.csun { position: absolute; z-index: -1; right: 8%; top: 10%; width: clamp(180px, 34vw, 460px); aspect-ratio: 1; border-radius: 50%; background: var(--orange); color: var(--orange-ink); font: 600 clamp(9px, 1vw, 12px)/1.6 var(--display); font-variation-settings: "wdth" 125; letter-spacing: 0.45em; text-transform: uppercase; will-change: transform }
+.cposter h1 { margin: 0; font-family: var(--display); font-variation-settings: "wdth" 125; font-weight: 900; font-size: clamp(56px, 11vw, 168px); line-height: 0.86; letter-spacing: -0.03em }
+.cposter p { margin: 12px 0 0; max-width: 40ch; font-size: 18px; color: var(--ink-soft) }
+
+.cbody { padding-block: 22px 90px }
+.ctools { display: grid; gap: 12px; padding-bottom: 16px; border-bottom: 2px solid var(--line) }
+.ctools input { max-width: 420px; padding: 8px 10px; border: 2px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); font: 500 16px var(--body) }
+.ctools input:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px }
+.cchips { display: flex; flex-wrap: wrap; gap: 6px }
+.cchips .chip small { font: 500 11px var(--mono); color: inherit; opacity: 0.7 }
+.cchips .chip[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: var(--orange-ink) }
+.ccount { margin: 14px 0 6px; font: 500 13px var(--mono); color: var(--ink-soft) }
+
+.clist { margin: 0; padding: 0; list-style: none }
+.clist li { display: grid; grid-template-columns: 3.2em 3.6em minmax(0, 1fr) auto; gap: 4px 16px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--line) }
+.rank { font: 500 13px var(--mono); color: var(--ink-soft); text-align: right }
+.cscore { font-family: var(--display); font-variation-settings: "wdth" 62; font-weight: 900; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums }
+.clist li:nth-child(-n + 3) .cscore { color: var(--orange) }
+.cjob { display: grid; gap: 2px; min-width: 0 }
+.cjob a { font-family: var(--display); font-variation-settings: "wdth" 80; font-weight: 750; font-size: 20px; line-height: 1.15; text-decoration: none; overflow-wrap: anywhere }
+.cjob a:hover, .cjob a:focus-visible { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 4px; text-decoration-color: var(--orange) }
+.cjob span { font-size: 14px; color: var(--ink-soft) }
+.cage { font: 500 13px var(--mono); color: var(--ink-soft); white-space: nowrap }
+.cmore { margin-top: 18px }
+
+.csun span { position: absolute; left: 12%; right: 12%; top: 17%; text-align: center }
+
+body[data-page="curated"] .nav a.active { border-color: var(--orange) }
+
+@media (max-width: 640px) {
+  .clist li { grid-template-columns: 2em 3em minmax(0, 1fr) }
+  .cage { grid-column: 3 }
+  .csun { right: -12%; top: 6% }
+  .csun span { display: none }
+}

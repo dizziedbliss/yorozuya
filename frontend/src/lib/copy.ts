@@ -114,6 +114,16 @@ export const COPY = {
       missLimit: "Missed refreshes before it's ghosted",
     },
   },
+  curated: {
+    title: "Curated.",
+    sub: "the hand-picked companies, fetched live from Greenhouse. the old faithful.",
+    sun: "live from greenhouse",
+    loading: "knocking on 17 Greenhouse boards. live, so give it a sec.",
+    search: "Search titles",
+    all: "every company",
+    more: (n: number) => `show ${n} more`,
+    count: (shown: number, total: number) => `${shown} of ${total}, best match first`,
+  },
   /** One reaction per status: the stamp word and the line under it. */
   statusFx: {
     applied: { stamp: "SENT IT", line: "another one in the void." },
