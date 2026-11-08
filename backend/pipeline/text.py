@@ -20,5 +20,30 @@ def html_to_text(raw: str | None) -> str:
         text = _TAG.sub("", text)
         text = html.unescape(text)
     text = _SPACES.sub(" ", text)
-    lines = [line.strip() for line in text.splitlines()]
-    return _BLANK_LINES.sub("\n\n", "\n".join(lines)).strip()
+    return _BLANK_LINES.sub(
+        "\n\n", "\n".join(_tidy_bullets([line.strip() for line in text.splitlines()]))
+    ).strip()
+
+
+def _tidy_bullets(lines: list[str]) -> list[str]:
+    """`<li>\\n<p>text</p>` leaves a bare "•" line: pull the text up onto it, and keep list items together."""
+    joined: list[str] = []
+    waiting = False
+    for line in lines:
+        if line == "•":
+            waiting = True
+            continue
+        if waiting:
+            if not line:
+                continue
+            line, waiting = f"• {line}", False
+        joined.append(line)
+
+    out: list[str] = []
+    for i, line in enumerate(joined):
+        prev = out[-1] if out else ""
+        nxt = next((x for x in joined[i + 1 :] if x), "")
+        if not line and prev.startswith("• ") and nxt.startswith("• "):
+            continue
+        out.append(line)
+    return out

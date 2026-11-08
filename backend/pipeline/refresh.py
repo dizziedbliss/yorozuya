@@ -145,6 +145,7 @@ def _store(
         "score": scored.score,
         "matched": scored.matched,
         "techs": scored.techs,
+        "breakdown": [[label, points] for label, points in scored.breakdown],
     }
     stmt = insert(Job).values(**values)
     # Within one run (another source already touched this job) keep the better read of it;
@@ -164,6 +165,7 @@ def _store(
             "score": _pick(better, stmt.excluded.score, Job.score),
             "matched": _pick(better, stmt.excluded.matched, Job.matched),
             "techs": _pick(better, stmt.excluded.techs, Job.techs),
+            "breakdown": _pick(better, stmt.excluded.breakdown, Job.breakdown),
             "description": _pick(
                 (func.length(stmt.excluded.description) > func.coalesce(func.length(Job.description), 0))
                 | ~same_run,

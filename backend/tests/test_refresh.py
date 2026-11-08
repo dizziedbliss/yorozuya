@@ -215,3 +215,13 @@ def test_a_later_run_rescores_a_job_instead_of_keeping_the_old_high_score(db_eng
     )
 
     assert rows(db_engine, "SELECT score FROM jobs")[0][0] < first
+
+
+def test_the_score_breakdown_is_stored_with_the_job(db_engine):
+    run_refresh(
+        db_engine, [Fake("greenhouse", SourceResult(jobs=[job()]))], SETTINGS, trigger="test", now=NOW
+    )
+
+    score, breakdown = rows(db_engine, "SELECT score, breakdown FROM jobs")[0]
+    assert sum(points for _, points in breakdown) == score
+    assert ["role: devops", 75] in breakdown

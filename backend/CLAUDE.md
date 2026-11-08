@@ -27,7 +27,9 @@
 - `sources/`: one adapter per board, all `fetch(client, settings) -> SourceResult` (`sources/base.py`).
   `ats.py` (Greenhouse, Lever, Ashby, Workable, SmartRecruiters), `boards.py` (Remotive, RemoteOK,
   Himalayas, Arbeitnow), `jsearch.py`, `jobspy_source.py` (LinkedIn, Indeed, Naukri), `fx.py`.
-- `routers/fresher.py`: the job list (filters), one job, status, and `POST …/find-hr`. `routers/settings.py`
+- `routers/fresher.py`: the job list (filters), one job (with the score `breakdown`), status (every change
+  is also appended to `job_status_events`), `GET /fresher/receipts` (sent jobs + timelines + stats), and
+  `POST …/find-hr`. `routers/settings.py`
   (editable keys only), `routers/logs.py` (run history for the Logs page).
 - `hr/finder.py`: emails in the posting → Hunter (`department=hr`) → guessed role addresses at a domain
   with MX. Results cached per company in `hr_contacts`; misses in `hr_lookup_misses` for `retry_days`.
@@ -55,6 +57,8 @@
   host is IPv6-only and unreachable from GitHub runners.
 
 ## Gotchas
+- Alembic autogenerate does not see CHECK constraint changes (e.g. widening `STATUSES` in `models.py`).
+  Write the drop/create by hand, and make the downgrade fold new values back first (see migration 0005).
 - JSONB through `postgresql.insert(...).values(value=...)` takes the Python dict. `json.dumps` first and it
   is encoded twice: you store a JSON *string*, not an object (bit migration 0002 once).
 

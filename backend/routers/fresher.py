@@ -15,14 +15,19 @@ from sqlalchemy.types import Text
 from auth import Locked
 from db import get_session
 from hr.finder import Contact, find_contacts, http_client, mx_checker
-from models import Company, HrContact, HrLookupMiss, Job, JobSource, JobStatus, Setting
+from models import Company, HrContact, HrLookupMiss, Job, JobSource, JobStatus, JobStatusEvent, Setting
 
 router = APIRouter(prefix="/fresher", tags=["fresher"], dependencies=Locked)
 
 SessionDep = Annotated[Session, Depends(get_session)]
 HttpDep = Annotated[httpx.Client, Depends(http_client)]
 MxDep = Annotated[Callable[[str], bool], Depends(mx_checker)]
-Status = Literal["new", "applied", "emailed", "skipped"]
+Status = Literal[
+    "new", "applied", "emailed", "heard_back", "interview", "offer", "rejected", "ghosted", "skipped"
+]
+# Everything Max has acted on; these show on Receipts and never hide when a job is ghosted.
+SENT: tuple[str, ...] = ("applied", "emailed", "heard_back", "interview", "offer", "rejected", "ghosted")
+REPLIED = ("heard_back", "interview", "offer")
 Where = Literal["bengaluru", "chennai", "india", "remote"]
 
 WHERE_PATTERNS: dict[str, str] = {
@@ -31,8 +36,7 @@ WHERE_PATTERNS: dict[str, str] = {
     "india": "india|bengaluru|bangalore|chennai",
     "remote": "remote|anywhere|worldwide",
 }
-# Jobs Max acted on stay visible even after they're ghosted.
-KEEP_WHEN_EXPIRED = ("applied", "emailed")
+KEEP_WHEN_EXPIRED = SENT
 
 
 class JobCard(BaseModel):
@@ -70,10 +74,47 @@ class FindHrOut(BaseModel):
     hunter_error: str | None = None
 
 
+class BreakdownPart(BaseModel):
+    label: str
+    points: int
+
+
 class JobDetail(JobCard):
     description: str | None
     note: str | None
     hr_contacts: list[HrContactOut]
+    breakdown: list[BreakdownPart]
+
+
+class StatusEventOut(BaseModel):
+    status: Status
+    note: str | None
+    at: datetime
+
+
+class Receipt(JobCard):
+    events: list[StatusEventOut]
+
+
+class ReceiptStats(BaseModel):
+    sent: int
+    emailed: int
+    replies: int
+    interviews: int
+    offers: int
+    rejected: int
+    ghosted: int
+
+
+class ActivityDay(BaseModel):
+    day: str
+    applied: int
+
+
+class Receipts(BaseModel):
+    jobs: list[Receipt]
+    stats: ReceiptStats
+    activity: list[ActivityDay]
 
 
 class JobList(BaseModel):
@@ -220,6 +261,7 @@ def get_job(job_id: int, session: SessionDep) -> JobDetail:
         description=job.description,
         note=note,
         hr_contacts=_contacts_out(contacts),
+        breakdown=[BreakdownPart(label=label, points=points) for label, points in job.breakdown],
     )
 
 
@@ -234,6 +276,7 @@ def set_status(job_id: int, body: StatusIn, session: SessionDep) -> StatusOut:
             set_={"status": stmt.excluded.status, "note": stmt.excluded.note, "updated_at": func.now()},
         ).returning(JobStatus.job_id, JobStatus.status, JobStatus.note, JobStatus.updated_at)
     ).one()
+    session.add(JobStatusEvent(job_id=job_id, status=body.status, note=body.note))
     session.commit()
     return StatusOut(job_id=row.job_id, status=row.status, note=row.note, updated_at=row.updated_at)
 
@@ -324,3 +367,53 @@ def find_hr(job_id: int, session: SessionDep, client: HttpDep, has_mx: MxDep) ->
         tried=outcome.tried,
         hunter_error=outcome.hunter_error,
     )
+
+
+@router.get("/receipts")
+def receipts(session: SessionDep, days: Annotated[int, Query(ge=1, le=90)] = 14) -> Receipts:
+    """Everything Max has sent, each with its status history, plus the numbers behind the Receipts page."""
+    query, status_col, _sources = _base_query()
+    rows = session.execute(query.where(status_col.in_(SENT))).all()
+    ids = [job.id for job, *_ in rows]
+    events: dict[int, list[JobStatusEvent]] = {job_id: [] for job_id in ids}
+    for event in session.scalars(
+        select(JobStatusEvent)
+        .where(JobStatusEvent.job_id.in_(ids))
+        .order_by(JobStatusEvent.at, JobStatusEvent.id)
+    ):
+        events[event.job_id].append(event)
+
+    def reached(job_id: int, statuses: tuple[str, ...]) -> bool:
+        return any(e.status in statuses for e in events[job_id])
+
+    receipts_out = [
+        Receipt(
+            **_card(job, row_status, row_sources),
+            events=[
+                StatusEventOut.model_validate({"status": e.status, "note": e.note, "at": e.at})
+                for e in events[job.id]
+            ],
+        )
+        for job, row_status, _note, row_sources in rows
+    ]
+    receipts_out.sort(key=lambda r: r.events[-1].at if r.events else r.first_seen_at, reverse=True)
+
+    current = {job.id: row_status for job, row_status, *_ in rows}
+    stats = ReceiptStats(
+        sent=len(ids),
+        emailed=sum(reached(i, ("emailed",)) for i in ids),
+        replies=sum(reached(i, REPLIED) for i in ids),
+        interviews=sum(reached(i, ("interview", "offer")) for i in ids),
+        offers=sum(current[i] == "offer" for i in ids),
+        rejected=sum(current[i] == "rejected" for i in ids),
+        ghosted=sum(current[i] == "ghosted" for i in ids),
+    )
+    today = datetime.now(UTC).date()
+    applied_days = [
+        e.at.astimezone(UTC).date() for evs in events.values() for e in evs if e.status == "applied"
+    ]
+    activity = [
+        ActivityDay(day=(d := today - timedelta(days=back)).isoformat(), applied=applied_days.count(d))
+        for back in range(days - 1, -1, -1)
+    ]
+    return Receipts(jobs=receipts_out, stats=stats, activity=activity)
