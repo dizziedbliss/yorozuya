@@ -125,3 +125,78 @@ def test_fresher_signals_in_the_jd_add_score_and_a_chip():
         result = score_fresher("Software Engineer", jd, "Bengaluru")
         assert chip in result.matched, jd
         assert result.score > base, jd
+
+
+def test_lever_style_what_we_require_counts_as_a_requirements_heading():
+    intro = score_fresher("Backend Intern", "We use Docker.\nWhat We Require\nCuriosity.", "Remote")
+    required = score_fresher("Backend Intern", "About us.\nWhat We Require\nDocker.", "Remote")
+    assert required.score > intro.score
+
+
+def test_mid_level_titles_seen_in_real_runs_are_dropped():
+    for title in [
+        "SDE3, Infrastructure Security Engineer (DevSecOps)",
+        "SDE2 - API Platform",
+        "Software Engineer II, Open Source Server",
+        "Site Reliability Engineer 2",
+        "Intermediate Backend Engineer, Authorization",
+        "Mid Data & Software Engineer",
+        "Analista de SRE Sênior",
+        "Founding Full Stack Software Engineer, Consulting",
+    ]:
+        assert score_fresher(title, "", "Remote").dropped == "too senior", title
+
+
+def test_level_one_titles_are_still_kept():
+    for title in ["DevOps Engineer 1", "Software Engineer I", "SDE 1 - Backend", "SDE-I Platform"]:
+        assert score_fresher(title, "", "Remote").dropped is None, title
+
+
+def test_off_role_titles_are_dropped_even_when_a_role_word_appears():
+    for title in [
+        "Data Scientist, Cloud Distribution & Growth",
+        "Product Manager, Developer Platform",
+        "Account Executive, Cloud",
+        "Product Designer, Platform",
+    ]:
+        assert score_fresher(title, "", "Remote").dropped == "not my role", title
+
+
+def test_a_long_tech_list_cannot_outweigh_being_an_internship():
+    buzzwords = "Python Go Docker Kubernetes Terraform Helm AWS GCP Azure Linux Nginx Redis PostgreSQL Prometheus Grafana"
+    mid = score_fresher("Site Reliability Engineer", f"Requirements:\n{buzzwords}", "Remote")
+    intern = score_fresher("Site Reliability Engineer Intern", "Linux.", "Remote")
+    assert intern.score > mid.score
+
+
+def test_india_beats_remote_anywhere_which_beats_region_locked_remote():
+    india = score_fresher("Backend Intern", "", "Bengaluru, India").score
+    anywhere = score_fresher("Backend Intern", "", "Remote, Global").score
+    us_only = score_fresher("Backend Intern", "", "Remote - USA").score
+    assert india > anywhere > us_only
+
+
+def test_fresh_grad_in_the_title_counts_as_a_level_signal():
+    result = score_fresher("Backend Engineer – GTM Engineering (Fresh grad, 2026)", "", "Bengaluru")
+    assert "new grad" in result.matched
+
+
+def test_the_breakdown_adds_up_to_the_score_and_names_every_part():
+    cases = [
+        (
+            "DevOps Intern",
+            "Freshers welcome.\nRequirements:\nDocker, Kubernetes, Terraform, Python, Go, AWS, Linux, Helm.",
+            "Bengaluru",
+        ),
+        ("Software Engineer, New Grad", "We use JavaScript.", "Bangalore"),
+        ("Backend Intern", "", "Remote - USA"),
+    ]
+    for title, jd, where in cases:
+        result = score_fresher(title, jd, where)
+        assert sum(points for _, points in result.breakdown) == result.score, title
+
+    devops = score_fresher(*cases[0])
+    labels = [label for label, _ in devops.breakdown]
+    assert "role: devops" in labels and "level: intern" in labels
+    assert "jd: freshers welcome" in labels and "location: bengaluru" in labels
+    assert ("your stack (capped)", 60) in devops.breakdown

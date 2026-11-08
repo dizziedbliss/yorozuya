@@ -30,8 +30,9 @@ def test_locked_routes_refuse_everyone_when_no_passphrase_is_configured(client, 
     assert response.status_code == 503
 
 
-def test_legacy_jobs_route_stays_open_until_the_new_frontend_ships(client):
-    assert client.get("/jobs").status_code == 200
+def test_legacy_public_jobs_route_is_gone(client):
+    # the v1 frontend is retired; Curated lives behind the passphrase at /curated/jobs now
+    assert client.get("/jobs").status_code == 404
 
 
 def test_health_reports_the_database_up(client, monkeypatch, database_url):

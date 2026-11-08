@@ -1,0 +1,105 @@
+{
+ "status": "OK",
+ "parameters": {
+  "query": "devops intern in Bengaluru",
+  "num_pages": 1,
+  "date_posted": "week",
+  "country": "in",
+  "language": "en"
+ },
+ "data": {
+  "jobs": [
+   {
+    "job_id": "SHl3REtNZnpyeFdVWG4zTEFBQUFBQT09OkVzd0JDb3dCUVVSRVlsZGxZVkp4WW5aamRsVm5WaTB5TmtSM1pHbEVjM05oZVdoWU5IUlJiRXRrUWxRemJuTldZVEF3T1hSc1p6QkZUMmg1UW1kTFJEbFdOSFpmZW1SaWJGWjJVVlU1Ym1OMVpEWnpjMVpOVjJ4bFpXbENla3B3ZEhKQmMyaFlNVmc1VW0xTlIwOVZPRkJsWnpkeGRHaHVUbmxSU3pBdE4ycFVTV0ptUVhKYVZ6ZHlZeTFKWVRFNVoxRVNGM0phVUhaaGIweE9TWFJmZW5WT2ExQnpUWFZXY1VGM0dpSkJTRTR3UlRkR1NIZERSMUZaUjI1blQwMURRbGwxZEdKdmNUTTNMV0ptZFVsbg",
+    "job_title": "DevOps and Cloud Intern",
+    "employer_name": "Initvalue",
+    "employer_logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkyAHw96gPQLzaJpU3eZDXX0o0jk8Vl5alitxd&s=0",
+    "employer_website": "https://initvalue.io",
+    "job_publisher": "JobLeads",
+    "job_employment_type": "Full–time",
+    "job_employment_types": [
+     "FULLTIME"
+    ],
+    "job_apply_link": "https://www.jobleads.com/in/job/devops-and-cloud-intern--bengaluru--e3808dfff776ad902f7efd87ea934d55e",
+    "job_apply_is_direct": false,
+    "apply_options": [
+     {
+      "apply_link": "https://www.jobleads.com/in/job/devops-and-cloud-intern--bengaluru--e3808dfff776ad902f7efd87ea934d55e",
+      "is_direct": false,
+      "publisher": "JobLeads"
+     }
+    ],
+    "job_description": "Key Responsibilities\n• Assist in provisioning and managing cloud infrastructure.\n• Support deployment of virtual machines and cloud services.\n• Assist in cloud monitoring and optimization.\n• Support cloud migration projects.\n• Work with Identity Access Management (IAM).\n• Support automation using cloud-native tools.\n• Perform tasks assigned by Cloud Architects and Engineers.\nEducational Qualification\n• BE/B.Tech/BCA/MCA/B.Sc./M.Sc. in Computer Science, Information Technology, Cloud Computing, Electronics, or related disciplines.\nTechnical Skills\n• Usage of GitHub and VSCode\n• Vibe Coding\n• Basic Cloud Computing concepts\n• Basic concepts of Cloud Security\n• Basic scripting knowledge (Shell/Python/PowerShell) is preferred\n• Familiarity with AWS/Azure/GCP fundamentals\nSoft Skills\n• Strong analytical thinking\n• Willingness to learn cloud technologies\n• Good communication skills\n• Teamwork and collaboration",
+    "job_is_remote": false,
+    "job_posted_at": "4 days ago",
+    "job_posted_at_timestamp": 1793664000,
+    "job_posted_at_datetime_utc": "2026-11-03T00:00:00.000Z",
+    "job_location": "Bengaluru, Karnataka",
+    "job_city": "Bengaluru",
+    "job_state": "Karnataka",
+    "job_country": "IN",
+    "job_latitude": 12.962895699999999,
+    "job_longitude": 77.57754,
+    "job_benefits": null,
+    "job_benefits_strings": null,
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=in&hl=en&udm=8#vhid=vt%3D20/docid%3DHywDKMfzrxWUXn3LAAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_salary_string": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {},
+    "job_onet_soc": null,
+    "job_onet_job_zone": null,
+    "employer_reviews": null,
+    "job_uid": "HywDKMfzrxWUXn3LAAAAAA=="
+   },
+   {
+    "job_id": "c09GRnRCNzNWazFNMnR6bEFBQUFBQT09OkVzd0JDb3dCUVVSRVlsZGxZbUl4ZFhnM1JFNXFYMDR3Y1RoVE1tbEdhVmN4UkVreFlXY3dPVTF1YWtWT1lVY3hXR042ZUROTGNtaEtVekJuVkc5c1ptZDZSRFpLY1hGcGIwa3hORTVsZDBWdVpUbG9MVVJUWTB0dExYUXRRWE10YlhCb1lUaHhPRms0TWt0bU1ISXhaMTlmWWw5dVRURkdZMlpWUzBKeldYVmpXa2xSU2xKd1gyWmllVlZDVG1sQk1Hb1NGM0phVUhaaGIweE9TWFJmZW5WT2ExQnpUWFZXY1VGM0dpSkJTRTR3UlRkSVdHeHhlVGx6UmxaUFEwaFFZbTlzTkhGb1dtUlRRVlkyTWxWbg",
+    "job_title": "DevOps Trainee with Linux (Intern)",
+    "employer_name": "Healthcare IT Instant IT Technology Ltd",
+    "employer_logo": "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://healthit.gov&size=128",
+    "employer_website": "https://healthit.gov",
+    "job_publisher": "Talents Jobs",
+    "job_employment_type": "Internship",
+    "job_employment_types": [
+     "INTERN"
+    ],
+    "job_apply_link": "https://talentsjobs.in/devops-trainee-with-linux-intern-instant-it-technology-ltd-1-to-7-years-211732",
+    "job_apply_is_direct": false,
+    "apply_options": [
+     {
+      "apply_link": "https://talentsjobs.in/devops-trainee-with-linux-intern-instant-it-technology-ltd-1-to-7-years-211732",
+      "is_direct": false,
+      "publisher": "Talents Jobs"
+     }
+    ],
+    "job_description": "Job opening for DevOps Trainee with Linux (Intern) at Instant IT Technology Ltd in Bangalore. Requires 1 - 7 years of experience and qualification: Bachelor Degree. Apply now.",
+    "job_is_remote": false,
+    "job_posted_at": "5 days ago",
+    "job_posted_at_timestamp": 1793577600,
+    "job_posted_at_datetime_utc": "2026-11-02T00:00:00.000Z",
+    "job_location": "Bengaluru, Karnataka",
+    "job_city": "Bengaluru",
+    "job_state": "Karnataka",
+    "job_country": "IN",
+    "job_latitude": 12.962895699999999,
+    "job_longitude": 77.57754,
+    "job_benefits": null,
+    "job_benefits_strings": null,
+    "job_google_link": "https://www.google.com/search?q=jobs&gl=in&hl=en&udm=8#vhid=vt%3D20/docid%3DsOFFtB73Vk1M2tzlAAAAAA%3D%3D&vssid=jobs-detail-viewer",
+    "job_salary": null,
+    "job_salary_string": null,
+    "job_min_salary": null,
+    "job_max_salary": null,
+    "job_salary_period": null,
+    "job_highlights": {},
+    "job_onet_soc": null,
+    "job_onet_job_zone": null,
+    "employer_reviews": null,
+    "job_uid": "sOFFtB73Vk1M2tzlAAAAAA=="
+   }
+  ],
+  "cursor": null
+ }
+}

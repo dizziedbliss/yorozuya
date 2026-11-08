@@ -21,7 +21,7 @@ ROLE_TITLE: dict[str, tuple[str, int]] = {
 # Seniority/level signals in the title.
 LEVEL_TITLE: dict[str, tuple[str, int]] = {
     "intern": (r"\bintern(ship)?\b", 30),
-    "new grad": (r"\bnew[\s-]?grad(uate)?\b", 30),
+    "new grad": (r"\b(new|fresh(er)?)[\s-]?grad(uate)?s?\b", 30),
     "graduate": (r"\bgraduate\b", 20),
     "fresher": (r"\bfreshers?\b", 30),
     "trainee": (r"\btrainee\b|\bapprentice\b", 25),
@@ -33,9 +33,18 @@ LEVEL_TITLE: dict[str, tuple[str, int]] = {
 
 TITLE_MULTIPLIER = 3
 
-# Any hit in the title drops the job outright.
+# Any hit in the title drops the job outright. Level 2+ ("SDE2", "Engineer II") is mid-level.
 TOO_SENIOR_TITLE = (
-    r"\b(senior|sr\.?|staff|principal|lead|manager|director|head of|vp|vice president|architect)\b"
+    r"\b(s[eê]nior|sr\.?|staff|principal|lead|manager|director|head of|vp|vice president|architect"
+    r"|intermediate|mid|founding|pleno)\b"
+    r"|\b(sde|swe)[\s-]?(2|3|4|ii|iii|iv)\b"
+    r"|\b(engineer|developer)[\s,-]*(2|3|4|ii|iii|iv)\b"
+)
+
+# Not Max's field, even if a role word slips into the title ("Data Scientist, Cloud ...").
+NOT_MY_ROLE_TITLE = (
+    r"data scientist|product manager|program manager|project manager|designer|account (executive|manager)"
+    r"|\bsales\b|marketing|recruit|customer success|\blegal\b|counsel"
 )
 
 # A JD asking for at least this many years of experience is dropped.
@@ -96,7 +105,8 @@ TECHS: dict[str, tuple[str, int]] = {
 REQUIREMENTS_MULTIPLIER = 2
 REQUIREMENTS_HEADING = (
     r"(?im)^\s*(requirements|qualifications|basic qualifications|minimum qualifications|"
-    r"what you('|’)ll need|what we('|’)re looking for|must[\s-]haves?|you have|who you are|skills)\b"
+    r"what you('|’)ll need|what we('|’)re looking for|what we require|must[\s-]haves?|"
+    r"you have|who you are|skills)\b"
 )
 
 # Fresher-friendly signals in the JD body.
@@ -112,3 +122,12 @@ LEVEL_DESCRIPTION: dict[str, tuple[str, int]] = {
     "new grad": (r"\b(new|recent) grad(uate)?s?\b", 15),
     "no experience needed": (r"\bno (prior )?experience (required|needed)\b", 15),
 }
+
+# Techs add at most this much, so a buzzword-heavy JD can't outrank a real internship.
+TECH_SCORE_CAP = 60
+
+# First match wins. Region-locked remote ("Remote - USA") gets nothing: usually needs local work rights.
+LOCATION_BONUS: tuple[tuple[str, int], ...] = (
+    (r"bengaluru|bangalore|chennai|india", 30),
+    (r"^remote$|anywhere|worldwide|global|work from home", 15),
+)

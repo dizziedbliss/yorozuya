@@ -92,3 +92,54 @@ def _city(location: str | None) -> str:
 def dedupe_key(company: str, title: str, location: str | None) -> str:
     """Same company + same title words + same city = the same job, whichever board it came from."""
     return f"{_company(company)}|{' '.join(_words(title))}|{_city(location)}"
+
+
+_CURRENCIES = (
+    (r"₹|\binr\b|\brs\b\.?", "INR"),
+    (r"\$|\busd\b", "USD"),
+    (r"€|\beur\b", "EUR"),
+    (r"£|\bgbp\b", "GBP"),
+)
+_AMOUNT = re.compile(r"(\d+(?:[.,]\d+)*)\s*(k\b|lpa\b|lakhs?\b|l\b)?", re.IGNORECASE)
+_PERIODS = (
+    (r"/\s*(mo|month)|per month|monthly|\bpm\b", "monthly"),
+    (r"/\s*(hr|hour)|per hour|hourly", "hourly"),
+    (r"/\s*(wk|week)|per week|weekly", "weekly"),
+    (r"/\s*day|per day|daily", "daily"),
+)
+
+
+def parse_salary_text(text: str | None) -> tuple[float, float | None, str, str] | None:
+    """'$25k - $35k' → (25000, 35000, 'USD', 'yearly'). None when there's no usable number."""
+    if not text:
+        return None
+    lower = text.lower()
+    amounts = [(float(n.replace(",", "")), (unit or "").lower()) for n, unit in _AMOUNT.findall(text)][:2]
+    if not amounts:
+        return None
+
+    lakhs = any(unit.startswith(("lpa", "lakh", "l")) for _, unit in amounts) or "lpa" in lower
+    thousands = any(unit == "k" for _, unit in amounts)
+    values = []
+    for value, _ in amounts:
+        if lakhs:
+            value *= 100_000
+        elif thousands and value < 1000:
+            value *= 1000
+        values.append(value)
+
+    currency = (
+        "INR" if lakhs else next((code for pattern, code in _CURRENCIES if re.search(pattern, lower)), None)
+    )
+    if currency is None:
+        return None
+    period = next((name for pattern, name in _PERIODS if re.search(pattern, lower)), "yearly")
+    low = values[0]
+    # A second number far below the first isn't a range ("$60k, needs 2 years").
+    high = values[1] if len(values) > 1 and values[1] >= low * 0.2 else None
+    return (
+        (int(low) if low.is_integer() else low),
+        ((int(high) if high.is_integer() else high) if high is not None else None),
+        currency,
+        period,
+    )

@@ -21,6 +21,10 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 NOW = func.now()
 
+# Where Max is with a job. Receipts lists everything except new and skipped.
+STATUSES = ("new", "applied", "emailed", "heard_back", "interview", "offer", "rejected", "ghosted", "skipped")
+STATUS_CHECK = "status IN (" + ", ".join(f"'{s}'" for s in STATUSES) + ")"
+
 
 class Base(DeclarativeBase):
     type_annotation_map = {
@@ -73,6 +77,8 @@ class Job(Base):
     score: Mapped[int] = mapped_column(Integer, server_default="0")
     matched: Mapped[list[str]] = mapped_column(server_default="{}")
     techs: Mapped[list[str]] = mapped_column(server_default="{}")
+    # [[label, points], ...] from the scorer; the points add up to `score`.
+    breakdown: Mapped[list[Any]] = mapped_column(JSONB, server_default="[]")
 
 
 class JobSource(Base):
@@ -81,6 +87,8 @@ class JobSource(Base):
     job_id: Mapped[int] = mapped_column(ForeignKey("jobs.id", ondelete="CASCADE"), primary_key=True)
     source: Mapped[str] = mapped_column(Text, primary_key=True)
     external_id: Mapped[str] = mapped_column(Text, primary_key=True)
+    # Set when the source lists *every* job in this scope ("greenhouse:gitlab"); see sources/base.py.
+    scope: Mapped[str | None] = mapped_column(Text, index=True)
     url: Mapped[str | None] = mapped_column(Text)
     seen_at: Mapped[datetime] = mapped_column(server_default=NOW)
 
@@ -95,6 +103,22 @@ class JobStatus(Base):
     status: Mapped[str] = mapped_column(Text, server_default="new")
     note: Mapped[str | None] = mapped_column(Text)
     updated_at: Mapped[datetime] = mapped_column(server_default=NOW)
+
+
+class JobStatusEvent(Base):
+    """Append-only history of status changes: the Receipts timeline."""
+
+    __tablename__ = "job_status_events"
+    __table_args__ = (
+        CheckConstraint(STATUS_CHECK, name="job_status_events_status_check"),
+        Index("job_status_events_job_idx", "job_id", "at"),
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    job_id: Mapped[int] = mapped_column(ForeignKey("jobs.id", ondelete="CASCADE"))
+    status: Mapped[str] = mapped_column(Text)
+    note: Mapped[str | None] = mapped_column(Text)
+    at: Mapped[datetime] = mapped_column(server_default=NOW)
 
 
 class HrContact(Base):
