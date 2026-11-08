@@ -31,8 +31,7 @@
 .scorecard { border: 2px solid var(--ink); padding: 16px 18px; display: grid; gap: 8px; font-variant-numeric: tabular-nums }
 .srow { display: grid; grid-template-columns: minmax(0, 1fr) 3.5em; gap: 4px 10px; align-items: center; font-size: 15px }
 .srow .bar { grid-column: 1 / -1; height: 8px; background: var(--paper-2) }
-.srow .bar i { display: block; height: 100%; background: var(--ink); width: 0; animation: barin 900ms var(--ease) forwards }
-@keyframes barin { to { width: var(--w) } }
+.srow .bar i { display: block; height: 100%; background: var(--ink); width: var(--w); animation: barin 900ms var(--ease) both }
 .srow b { text-align: right; font: 600 15px var(--mono) }
 .stotal { display: flex; justify-content: space-between; border-top: 3px double var(--ink); padding-top: 8px; font-family: var(--display); font-variation-settings: "wdth" 72; font-weight: 900; font-size: 30px }
 .translator { display: grid; gap: 10px }

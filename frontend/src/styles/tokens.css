@@ -75,6 +75,7 @@ body[data-page="log"] .navbar { border-color: var(--tizon-ink) }
 body[data-page="log"] .nav a.active { border-color: var(--tizon-red) }
 body[data-page="receipts"] .nav a.active { border-color: var(--stamp) }
 .nav .count { display: inline-grid; place-items: center; min-width: 1.5em; height: 1.5em; margin-left: 4px; background: var(--stamp); color: #fff; font: 600 12px var(--mono); border-radius: 50%; vertical-align: 2px }
+@media (max-width: 520px) { .nav { gap: 6px 14px; font-variation-settings: "wdth" 100 } }
 
 /* ---------- shared controls ---------- */
 .chip { border: 1.5px solid var(--ink); background: transparent; padding: 3px 10px; font-size: 14px; border-radius: 0; transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease) }
@@ -110,6 +111,9 @@ body[data-page="receipts"] .nav a.active { border-color: var(--stamp) }
 @keyframes thunk { 0% { scale: 2.6; opacity: 0 } 60% { scale: 0.93; opacity: 1 } 100% { scale: 1 } }
 @keyframes shake { 20% { transform: rotate(-1.2deg) } 45% { transform: rotate(0.9deg) } 70% { transform: rotate(-0.4deg) } }
 @keyframes spin { to { transform: rotate(360deg) } }
+@keyframes barin { from { width: 0 } }
+@keyframes fadeout { to { opacity: 0 } }
+@keyframes pop { 0% { scale: 0.2 } 70% { scale: 1.15 } 100% { scale: 1 } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important }
