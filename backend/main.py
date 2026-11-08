@@ -25,9 +25,3 @@ app.include_router(curated.router)
 app.include_router(fresher.router)
 app.include_router(settings.router)
 app.include_router(logs.router)
-
-
-@app.get("/jobs", tags=["legacy"])
-async def legacy_jobs() -> list[dict]:
-    """v1 route the live frontend still calls. Public until the stage 4 frontend sends the passphrase."""
-    return await curated.fetch_curated()

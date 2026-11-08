@@ -12,6 +12,8 @@ class FresherScore:
     matched: list[str] = field(default_factory=list)
     techs: list[str] = field(default_factory=list)
     dropped: str | None = None
+    # (label, points) for every part of the score; the parts add up to `score`.
+    breakdown: list[tuple[str, int]] = field(default_factory=list)
 
 
 def _hits(table: dict[str, tuple[str, int]], text: str) -> list[tuple[str, int]]:
@@ -70,21 +72,33 @@ def score_fresher(title: str, description: str, location: str | None) -> Fresher
         return FresherScore(score=0, dropped="wants 3+ years")
 
     matched: list[str] = []
-    score = 0
+    breakdown: list[tuple[str, int]] = []
+    level_labels = set(w.LEVEL_TITLE)
 
     for label, weight in role_hits + _hits(w.LEVEL_TITLE, t):
         matched.append(label)
-        score += weight * w.TITLE_MULTIPLIER
+        kind = "level" if label in level_labels else "role"
+        breakdown.append((f"{kind}: {label}", weight * w.TITLE_MULTIPLIER))
 
     for label, weight in _hits(w.LEVEL_DESCRIPTION, d):
         if label not in matched:
             matched.append(label)
-            score += weight
+            breakdown.append((f"jd: {label}", weight))
 
     techs = _techs(description)
-    score += min(sum(weight for _, weight in techs), w.TECH_SCORE_CAP)
+    tech_total = sum(weight for _, weight in techs)
+    if tech_total > w.TECH_SCORE_CAP:
+        breakdown.append(("your stack (capped)", w.TECH_SCORE_CAP))
+    else:
+        breakdown += [(f"tech: {label}", weight) for label, weight in techs]
 
     loc = (location or "").strip().lower()
-    score += next((bonus for pattern, bonus in w.LOCATION_BONUS if re.search(pattern, loc)), 0)
+    for pattern, bonus in w.LOCATION_BONUS:
+        if found := re.search(pattern, loc):
+            breakdown.append((f"location: {found.group(0)}", bonus))
+            break
 
-    return FresherScore(score=score, matched=matched, techs=[label for label, _ in techs])
+    score = sum(points for _, points in breakdown)
+    return FresherScore(
+        score=score, matched=matched, techs=[label for label, _ in techs], breakdown=breakdown
+    )
