@@ -5,6 +5,11 @@ import { PassphraseGate } from "./components/PassphraseGate";
 import { api } from "./lib/api";
 import { reducedMotion } from "./lib/motion";
 import { Fresher } from "./pages/Fresher";
+import { JobPoster } from "./pages/JobPoster";
+import { Log } from "./pages/Log";
+import { Curated } from "./pages/Curated";
+import { Receipts } from "./pages/Receipts";
+import { Settings } from "./pages/Settings";
 import { Soon } from "./pages/Soon";
 
 const PAGE_OF: Record<string, string> = { "": "fresher", jobs: "poster", receipts: "receipts", log: "log", curated: "curated", settings: "settings" };
@@ -35,11 +40,11 @@ export function App() {
         <main>
           <Routes>
             <Route index element={<Fresher />} />
-            <Route path="jobs/:id" element={<Soon what="The job poster" />} />
-            <Route path="receipts" element={<Soon what="Receipts" />} />
-            <Route path="log" element={<Soon what="The log" />} />
-            <Route path="curated" element={<Soon what="Curated" />} />
-            <Route path="settings" element={<Soon what="Settings" />} />
+            <Route path="jobs/:id" element={<JobPoster />} />
+            <Route path="receipts" element={<Receipts />} />
+            <Route path="log" element={<Log />} />
+            <Route path="curated" element={<Curated />} />
+            <Route path="settings" element={<Settings />} />
             <Route path="*" element={<Soon what="This page" lost />} />
           </Routes>
         </main>

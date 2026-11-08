@@ -64,3 +64,6 @@ export interface JobFilters {
   includeNoSalary?: boolean;
   includeExpired?: boolean;
 }
+
+/** Curated mode: a live Greenhouse job from the hand-picked list (backend/routers/curated.py). */
+export interface CuratedJob { title: string; company: string; location: string; applicationLink: string; logo: string | null; updatedAt: string; score: number }

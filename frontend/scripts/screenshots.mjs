@@ -18,7 +18,7 @@ for (const scheme of ["light", "dark"]) {
       await page.goto(base + path, { waitUntil: "networkidle" });
       await page.waitForTimeout(900);
       const name = `${out}/${(path.replace(/\W+/g, "-").replace(/^-|-$/g, "") || "home")}-${width}-${scheme}.png`;
-      await page.screenshot({ path: name, fullPage: false });
+      await page.screenshot({ path: name, fullPage: Boolean(process.env.FULL) });
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
       console.log(`${name}${overflow ? "  ⚠ horizontal overflow" : ""}`);
     }

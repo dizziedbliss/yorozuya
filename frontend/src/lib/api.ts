@@ -1,4 +1,4 @@
-import type { FindHr, JobDetail, JobFilters, JobList, Receipts, Run, RunDetail, Status } from "./types";
+import type { CuratedJob, FindHr, JobDetail, JobFilters, JobList, Receipts, Run, RunDetail, Status } from "./types";
 
 const BASE = (import.meta.env.VITE_API_URL as string | undefined) ?? "http://localhost:8000";
 const KEY = "jbsearch.passphrase";
@@ -67,6 +67,7 @@ export const api = {
     }),
   findHr: (id: number) => request<FindHr>(`/fresher/jobs/${id}/find-hr`, { method: "POST" }),
   receipts: () => request<Receipts>("/fresher/receipts"),
+  curated: () => request<CuratedJob[]>("/curated/jobs"),
   runs: (limit = 40) => request<{ runs: Run[] }>("/logs/runs", {}, new URLSearchParams({ limit: String(limit) })),
   run: (id: number) => request<RunDetail>(`/logs/runs/${id}`),
   settings: () => request<Record<string, Record<string, unknown>>>("/settings"),

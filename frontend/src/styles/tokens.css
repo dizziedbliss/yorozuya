@@ -8,6 +8,7 @@
   --st-applied: #e3262e; --st-emailed: #2b47d9; --st-heard: #16804a; --st-interview: #c97c00;
   --st-offer: #b8860b; --st-rejected: #6b6b67; --st-ghosted: #7d6fc4;
   --bark: #4a2c1d; --wood: #c99a6a;
+  --orange: #f26b1d; --orange-ink: #000000;
   --line: rgba(0, 0, 0, 0.88);
   --grain-op: 0.16;
 
@@ -29,7 +30,7 @@
     --paper: #121211; --paper-2: #20201e; --ink: #ecebe6; --ink-soft: #b9b8b2; --red: #ff4a4f; --red-ink: #121211;
     --tizon: #1b1512; --tizon-ink: #f1e6d6; --tizon-red: #ff5b4d; --thermal: #1a1a1c; --stamp: #7f95ff;
     --st-applied: #ff4a4f; --st-emailed: #7f95ff; --st-heard: #3fcf7f; --st-interview: #ffb02e;
-    --st-offer: #ffd24a; --st-rejected: #a3a39e; --st-ghosted: #b3a8ff; --bark: #b98a6a; --wood: #6b4a2f;
+    --st-offer: #ffd24a; --st-rejected: #a3a39e; --st-ghosted: #b3a8ff; --bark: #b98a6a; --wood: #6b4a2f; --orange: #ff8a3d; --orange-ink: #121211;
     --line: rgba(236, 235, 230, 0.85); --grain-op: 0.07;
     color-scheme: dark;
   }
@@ -38,7 +39,7 @@
   --paper: #121211; --paper-2: #20201e; --ink: #ecebe6; --ink-soft: #b9b8b2; --red: #ff4a4f; --red-ink: #121211;
   --tizon: #1b1512; --tizon-ink: #f1e6d6; --tizon-red: #ff5b4d; --thermal: #1a1a1c; --stamp: #7f95ff;
   --st-applied: #ff4a4f; --st-emailed: #7f95ff; --st-heard: #3fcf7f; --st-interview: #ffb02e;
-  --st-offer: #ffd24a; --st-rejected: #a3a39e; --st-ghosted: #b3a8ff; --bark: #b98a6a; --wood: #6b4a2f;
+  --st-offer: #ffd24a; --st-rejected: #a3a39e; --st-ghosted: #b3a8ff; --bark: #b98a6a; --wood: #6b4a2f; --orange: #ff8a3d; --orange-ink: #121211;
   --line: rgba(236, 235, 230, 0.85); --grain-op: 0.07;
   color-scheme: dark;
 }
@@ -75,6 +76,7 @@ body[data-page="log"] .navbar { border-color: var(--tizon-ink) }
 body[data-page="log"] .nav a.active { border-color: var(--tizon-red) }
 body[data-page="receipts"] .nav a.active { border-color: var(--stamp) }
 .nav .count { display: inline-grid; place-items: center; min-width: 1.5em; height: 1.5em; margin-left: 4px; background: var(--stamp); color: #fff; font: 600 12px var(--mono); border-radius: 50%; vertical-align: 2px }
+@media (max-width: 520px) { .nav { gap: 6px 14px; font-variation-settings: "wdth" 100 } }
 
 /* ---------- shared controls ---------- */
 .chip { border: 1.5px solid var(--ink); background: transparent; padding: 3px 10px; font-size: 14px; border-radius: 0; transition: background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease) }
@@ -110,6 +112,9 @@ body[data-page="receipts"] .nav a.active { border-color: var(--stamp) }
 @keyframes thunk { 0% { scale: 2.6; opacity: 0 } 60% { scale: 0.93; opacity: 1 } 100% { scale: 1 } }
 @keyframes shake { 20% { transform: rotate(-1.2deg) } 45% { transform: rotate(0.9deg) } 70% { transform: rotate(-0.4deg) } }
 @keyframes spin { to { transform: rotate(360deg) } }
+@keyframes barin { from { width: 0 } }
+@keyframes fadeout { to { opacity: 0 } }
+@keyframes pop { 0% { scale: 0.2 } 70% { scale: 1.15 } 100% { scale: 1 } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important }
