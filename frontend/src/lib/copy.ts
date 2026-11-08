@@ -69,6 +69,25 @@ export const COPY = {
     gone: (days: number) => `${days} days. they're gone.`,
     goneBody: "let it go. or send one last \"just checking in\" for closure.",
   },
+  log: {
+    title: "Log",
+    aside: "(a real log)",
+    sub: "Every refresh grows a ring. The newest sits under the bark; the old ones sink into the heartwood.",
+    next: (time: string) => `next ring grows at ${time} IST`,
+    empty: "no rings yet. the first refresh plants the tree; it runs every 6 hours.",
+    legend: { ok: "fetched fine (darker = more new jobs)", blocked: "blocked", error: "broke" },
+    note: "Arc length follows how many jobs a board listed, on a log scale, or Greenhouse would eat the whole ring. Click any arc.",
+    heartwood: (n: number) => `${n} older ${n === 1 ? "run" : "runs"} in the heartwood`,
+    schedule: "Schedule",
+    quips: {
+      ok: "clean cut. the board talked.",
+      blocked: "the board slammed the door. we'll knock again in 6 hours.",
+      error: "something snapped. the run kept going without it.",
+    },
+    newFromRun: "New in this whole run",
+    noneNew: "nothing new this run. the boards were quiet.",
+    close: "Close",
+  },
   /** One reaction per status: the stamp word and the line under it. */
   statusFx: {
     applied: { stamp: "SENT IT", line: "another one in the void." },

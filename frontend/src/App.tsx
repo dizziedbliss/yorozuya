@@ -6,6 +6,7 @@ import { api } from "./lib/api";
 import { reducedMotion } from "./lib/motion";
 import { Fresher } from "./pages/Fresher";
 import { JobPoster } from "./pages/JobPoster";
+import { Log } from "./pages/Log";
 import { Receipts } from "./pages/Receipts";
 import { Soon } from "./pages/Soon";
 
@@ -39,7 +40,7 @@ export function App() {
             <Route index element={<Fresher />} />
             <Route path="jobs/:id" element={<JobPoster />} />
             <Route path="receipts" element={<Receipts />} />
-            <Route path="log" element={<Soon what="The log" />} />
+            <Route path="log" element={<Log />} />
             <Route path="curated" element={<Soon what="Curated" />} />
             <Route path="settings" element={<Soon what="Settings" />} />
             <Route path="*" element={<Soon what="This page" lost />} />
