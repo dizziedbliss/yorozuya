@@ -39,11 +39,18 @@ def _tidy_bullets(lines: list[str]) -> list[str]:
             line, waiting = f"• {line}", False
         joined.append(line)
 
+    # The next non-empty line after each index, found in one backwards pass (descriptions are outside input).
+    next_text = [""] * len(joined)
+    upcoming = ""
+    for i in range(len(joined) - 1, -1, -1):
+        next_text[i] = upcoming
+        if joined[i]:
+            upcoming = joined[i]
+
     out: list[str] = []
     for i, line in enumerate(joined):
         prev = out[-1] if out else ""
-        nxt = next((x for x in joined[i + 1 :] if x), "")
-        if not line and prev.startswith("• ") and nxt.startswith("• "):
+        if not line and prev.startswith("• ") and next_text[i].startswith("• "):
             continue
         out.append(line)
     return out
