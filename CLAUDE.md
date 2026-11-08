@@ -25,5 +25,4 @@ for a hand-picked list) and **Fresher** (DB-backed hunt for intern/new-grad role
   keep it that way.
 
 ## Not built
-- Job poster, Receipts, Log, Curated and Settings pages (placeholders until the next PR). The plan lives
-  outside the repo.
+- Editing the company list from Settings (there is no companies API yet; edit the seed migration or the DB).
