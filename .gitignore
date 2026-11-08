@@ -29,3 +29,5 @@ dist-ssr
 __pycache__
 
 .secrets
+# local screenshot runs (frontend/scripts/screenshots.mjs)
+frontend/screenshots

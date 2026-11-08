@@ -6,7 +6,8 @@ for a hand-picked list) and **Fresher** (DB-backed hunt for intern/new-grad role
 
 ## Layout
 - `backend/`: FastAPI + SQLAlchemy 2 + Alembic, Python 3.14, managed with uv. Deployed on Railway.
-- `frontend/`: React 19 + Vite + Tailwind v4. Deployed on Vercel (yorozuya.dizziedbliss.lol).
+- `frontend/`: React 19 + Vite + TypeScript (strict) + React Router 7 + TanStack Query, plain CSS tokens.
+  Deployed on Vercel (yorozuya.dizziedbliss.lol). Rules in `frontend/CLAUDE.md`.
 - `.github/workflows/refresh.yml`: the fresher refresh every 6h (and "Run workflow" by hand).
 - `compose.yaml`: local Postgres (`127.0.0.1:5433`) and the API (`127.0.0.1:8000`, passphrase
   `local-dev`). Production DB is Supabase.
@@ -14,7 +15,7 @@ for a hand-picked list) and **Fresher** (DB-backed hunt for intern/new-grad role
 ## Commands
 - Start local Postgres: `docker compose up -d db`
 - Full local stack: `docker compose up -d --build`
-- Frontend: `cd frontend && npm ci && npm run dev -- --host 0.0.0.0`
+- Frontend: `cd frontend && npm ci && npm run dev`
 
 ## Rules
 - Frontend code is TypeScript only (strict). No new `.js`/`.jsx`.
@@ -24,4 +25,4 @@ for a hand-picked list) and **Fresher** (DB-backed hunt for intern/new-grad role
   keep it that way.
 
 ## Not built
-- The poster UI for fresher mode (the API is built). The plan lives outside the repo.
+- Editing the company list from Settings (there is no companies API yet; edit the seed migration or the DB).

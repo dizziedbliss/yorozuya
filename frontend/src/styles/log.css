@@ -1,0 +1,62 @@
+/* Log: Tizón cream and red, a real cut log over a parallax forest of stumps. */
+
+.forest { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; color: var(--tizon-ink) }
+.forest .layer { position: absolute; left: -5%; right: -5%; will-change: transform }
+.forest svg { display: block; width: 100%; height: auto }
+.forest .far { bottom: 0; opacity: 0.1 }
+.forest .mid { bottom: -2%; opacity: 0.16 }
+.forest .near { bottom: -4%; opacity: 0.22 }
+.dust { position: fixed; z-index: 1; top: -10px; width: 4px; height: 4px; border-radius: 1px; background: var(--wood); pointer-events: none; animation: fall linear infinite }
+@keyframes fall { to { transform: translate(var(--dx), 110vh) rotate(540deg) } }
+
+.logpage { position: relative; z-index: 2 }
+.logshead { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 24px; align-items: end; padding-block: 30px 12px }
+.logshead h1 { margin: 0 0 0.14em; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.18em; font: 700 clamp(84px, 15vw, 190px)/0.82 var(--slab); letter-spacing: -0.02em }
+.logshead h1 small { font: 400 clamp(20px, 2.6vw, 34px)/1 var(--slab); letter-spacing: 0; color: var(--tizon-red) }
+.logshead p { margin: 10px 0 0; max-width: 36ch; font: 400 20px/1.35 var(--slab) }
+.logshead .next { align-self: end; max-width: none; font-size: 15px; color: var(--tizon-red) }
+
+.logsbody { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr); gap: 36px; align-items: start; padding-block: 8px 80px }
+.ringbox { min-width: 0 }
+.ringbox > svg { display: block; width: 100%; height: auto; filter: drop-shadow(10px 14px 0 color-mix(in srgb, var(--tizon-ink) 18%, transparent)) }
+.ring { transform-origin: 400px 400px; animation: grow 700ms var(--ease) both }
+@keyframes grow { from { transform: scale(0.3); opacity: 0 } }
+.arc { cursor: pointer; transition: opacity var(--t-fast) var(--ease) }
+.arc.error { stroke: var(--tizon-red); stroke-width: 1.6; stroke-dasharray: 3 3 }
+.arc:hover, .arc:focus-visible { opacity: 0.45; outline: none }
+.ring:last-of-type .arc { stroke: var(--tizon-ink); stroke-width: 1.4 }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 14px; font: 400 15px var(--slab) }
+.legend span { display: inline-flex; gap: 6px; align-items: center }
+.note { max-width: 60ch; font: 400 14px/1.45 var(--slab); opacity: 0.85 }
+
+.schedule { padding: 4px 0; font-family: var(--slab); background: color-mix(in srgb, var(--tizon) 85%, transparent) }
+.schedule h2 { margin: 0 0 12px; font: 700 32px/1 var(--slab) }
+.schedule ol { margin: 0; padding: 0; list-style: none }
+.schedule li { display: grid; grid-template-columns: 8.5em minmax(0, 1fr) auto; gap: 8px; padding: 7px 0; border-top: 1px solid var(--tizon-ink); font-size: 16px; font-variant-numeric: tabular-nums }
+.schedule li:first-child { font-weight: 600 }
+.schedule b { color: var(--tizon-red) }
+
+.specimen { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; padding: 16px; background: color-mix(in srgb, var(--tizon-ink) 38%, transparent) }
+.card { display: grid; gap: 10px; width: 100%; max-width: 440px; max-height: calc(100dvh - 32px); overflow: auto; padding: 24px; background: var(--tizon); color: var(--tizon-ink); border: 2px solid var(--tizon-ink); box-shadow: 10px 10px 0 var(--tizon-red); animation: zoom var(--t-mid) var(--ease) }
+@keyframes zoom { from { scale: 0.55; opacity: 0; rotate: -4deg } }
+.card h3 { margin: 0; font: 700 42px/1 var(--slab); overflow-wrap: anywhere }
+.card .quip { margin: 0; font: italic 400 16px var(--slab) }
+.card dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; margin: 0; font: 400 17px var(--slab) }
+.card dt { color: var(--tizon-red) }
+.card dd { margin: 0; font-variant-numeric: tabular-nums }
+.card .err { padding-top: 8px; border-top: 1px dashed var(--tizon-ink); font: 500 14px var(--mono); overflow-wrap: anywhere }
+.card .fresh { display: grid; gap: 4px; padding-top: 8px; border-top: 1px dashed var(--tizon-ink); font: 400 15px var(--slab) }
+.card .fresh h4 { margin: 0; font: 700 17px var(--slab) }
+.card .fresh p { margin: 0 }
+.card .fresh a { text-decoration: none }
+.card .fresh a:hover, .card .fresh a:focus-visible { text-decoration: underline; text-decoration-color: var(--tizon-red) }
+.card .fresh b { color: var(--tizon-red) }
+.card button { justify-self: start; padding: 6px 14px; border: 2px solid var(--tizon-ink); background: transparent; color: inherit; font: 600 16px var(--slab) }
+
+@media (max-width: 860px) {
+  .logsbody, .logshead { grid-template-columns: 1fr }
+}
+@media (max-width: 520px) {
+  .schedule li { grid-template-columns: minmax(0, 1fr) auto; }
+  .schedule li span:nth-child(2) { display: none }
+}

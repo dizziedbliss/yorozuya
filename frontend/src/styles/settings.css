@@ -1,0 +1,44 @@
+/* Settings: a typewritten application slip. Accent: the same red as the Fresher poster. */
+
+.slippage { padding-block: 30px 90px }
+.slipshead h1 { margin: 0 0 0.16em; font-family: var(--display); font-variation-settings: "wdth" 62; font-weight: 900; font-size: clamp(64px, 11vw, 150px); line-height: 0.84; letter-spacing: -0.01em }
+.slipshead p { margin: 10px 0 26px; font: 500 16px var(--mono); color: var(--ink-soft) }
+
+.slip { position: relative; display: grid; gap: 34px; max-width: 760px; padding: 28px clamp(16px, 4vw, 40px) 36px; background: var(--thermal); border: 2px solid var(--ink); box-shadow: 8px 8px 0 var(--red); font-family: var(--mono) }
+.slip::before { content: ""; position: absolute; inset: 0 auto 0 26px; width: 2px; background: color-mix(in srgb, var(--red) 40%, transparent) }
+.formno { margin: 0; font-size: 13px; color: var(--ink-soft); text-align: right }
+.part { display: grid; gap: 14px; padding-left: 18px }
+.part h2 { margin: 0; font-family: var(--display); font-variation-settings: "wdth" 72; font-weight: 800; font-size: 30px; line-height: 1 }
+.partno { color: var(--red) }
+.field { display: grid; gap: 4px }
+.field label { font-size: 13px; color: var(--ink-soft) }
+.field input, .field textarea { width: 100%; padding: 6px 2px; border: 0; border-bottom: 2px dotted var(--ink); border-radius: 0; background: transparent; color: var(--ink); font: 500 16px/1.5 var(--mono); resize: vertical }
+.field textarea { background-image: repeating-linear-gradient(transparent 0 23px, color-mix(in srgb, var(--ink) 18%, transparent) 23px 24px); background-attachment: local; line-height: 24px }
+.field input:focus-visible, .field textarea:focus-visible { outline: none; border-bottom-style: solid; border-bottom-color: var(--red); background-color: color-mix(in srgb, var(--red) 6%, transparent) }
+.blanks { display: flex; flex-wrap: wrap; gap: 6px }
+.blanks .chip { font: 500 13px var(--mono) }
+.hint { margin: 0; font-size: 13px; color: var(--ink-soft) }
+.slipgrid { display: grid; grid-template-columns: minmax(0, 760px) minmax(280px, 1fr); gap: 40px; align-items: start }
+.envelope { position: sticky; top: 24px; display: grid; gap: 10px; padding: 18px 20px 20px; background: var(--paper); border: 2px solid var(--ink); font: 14px/1.5 var(--mono); rotate: 0.8deg; background-image: repeating-linear-gradient(-45deg, var(--red) 0 10px, transparent 10px 20px, var(--stamp) 20px 30px, transparent 30px 40px); background-size: 100% 8px; background-repeat: no-repeat; padding-top: 26px }
+.envhead { display: flex; justify-content: space-between; gap: 12px; align-items: start; padding-bottom: 8px; border-bottom: 1.5px dashed var(--ink); color: var(--ink-soft) }
+.postage { display: grid; place-items: center; width: 54px; height: 62px; flex: none; border: 2px dashed var(--red); color: var(--red); font: 900 34px/1 var(--display) }
+.envelope p { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere }
+.envelope small { color: var(--ink-soft); font-size: 12px }
+.problem { margin: 0; color: var(--red); font-weight: 600 }
+.part .btn { justify-self: start }
+.numbers { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px 24px }
+.numbers input { font-size: 22px; font-weight: 600 }
+
+.filedstamp { position: absolute; z-index: 3; right: 28px; top: 34px; padding: 4px 16px; border: 5px double var(--red); color: var(--red); font-family: var(--display); font-variation-settings: "wdth" 100; font-weight: 900; font-size: 44px; rotate: -12deg; pointer-events: none; mix-blend-mode: multiply; animation: thunk 380ms var(--ease) both }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .filedstamp { mix-blend-mode: screen } }
+:root[data-theme="dark"] .filedstamp { mix-blend-mode: screen }
+
+@media (max-width: 1080px) {
+  .slipgrid { grid-template-columns: 1fr }
+  .envelope { position: static; rotate: 0deg; max-width: 760px }
+}
+@media (max-width: 520px) {
+  .slip::before { left: 10px }
+  .part { padding-left: 8px }
+  .filedstamp { right: 12px; font-size: 32px }
+}
