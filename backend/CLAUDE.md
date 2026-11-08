@@ -8,6 +8,7 @@
 - Lint and format: `uv run ruff check --fix . && uv run ruff format .`
 - Dev server: `DATABASE_URL=postgresql://yorozuya:yorozuya@127.0.0.1:5433/yorozuya SITE_PASSPHRASE=local-dev uv run uvicorn main:app --reload`
 - Migrate: `DATABASE_URL=… uv run alembic upgrade head`
+- Quotas to respect while testing by hand: JSearch 200/month, Hunter 50 searches/month.
 - Refresh run (all sources, live): `DATABASE_URL=… uv run python -m worker.refresh`; skip some with
   `SKIP_SOURCES=jobspy:linkedin,jsearch` (JSearch has 200 requests/month: don't burn them testing).
 - New migration: change `models.py`, then
@@ -26,14 +27,19 @@
 - `sources/`: one adapter per board, all `fetch(client, settings) -> SourceResult` (`sources/base.py`).
   `ats.py` (Greenhouse, Lever, Ashby, Workable, SmartRecruiters), `boards.py` (Remotive, RemoteOK,
   Himalayas, Arbeitnow), `jsearch.py`, `jobspy_source.py` (LinkedIn, Indeed, Naukri), `fx.py`.
+- `routers/fresher.py`: the job list (filters), one job (with the score `breakdown`), status (every change
+  is also appended to `job_status_events`), `GET /fresher/receipts` (sent jobs + timelines + stats), and
+  `POST …/find-hr`. `routers/settings.py`
+  (editable keys only), `routers/logs.py` (run history for the Logs page).
+- `hr/finder.py`: emails in the posting → Hunter (`department=hr`) → guessed role addresses at a domain
+  with MX. Results cached per company in `hr_contacts`; misses in `hr_lookup_misses` for `retry_days`.
+- `notify/telegram.py`: the end-of-run ping; `worker/refresh.py` logs its outcome as a `telegram` run line.
 - `pipeline/refresh.py` runs one refresh (fetch all → score → upsert → expire → log to
   `run_sources`); `worker/refresh.py` is its CLI, run every 6h by `.github/workflows/refresh.yml`.
 
 ## Rules
-- Every route except `/health` and the legacy `/jobs` is locked: add routers with
-  `dependencies=Locked` (from `auth.py`). The lock fails closed when `SITE_PASSPHRASE` is unset.
-- Legacy `/jobs` is public only because the v1 frontend calls it without a passphrase. Remove it when
-  the new frontend ships.
+- Every route except `/health` is locked: add routers with `dependencies=Locked` (from `auth.py`).
+  The lock fails closed when `SITE_PASSPHRASE` is unset.
 - Migrations are append-only: never edit one that has been applied anywhere. Every new table gets
   `ENABLE ROW LEVEL SECURITY` (Supabase serves `public` through its REST API; the migration test
   checks this).
@@ -49,8 +55,13 @@
   host is IPv6-only and unreachable from GitHub runners.
 
 ## Gotchas
+- Railway only runs the Dockerfile's `uvicorn`; it never migrates. Run `alembic upgrade head` against
+  Supabase (pooler URL) before a deploy that needs a new migration. The refresh workflow migrates too,
+  but only on its next run.
+- Alembic autogenerate does not see CHECK constraint changes (e.g. widening `STATUSES` in `models.py`).
+  Write the drop/create by hand, and make the downgrade fold new values back first (see migration 0005).
 - JSONB through `postgresql.insert(...).values(value=...)` takes the Python dict. `json.dumps` first and it
   is encoded twice: you store a JSON *string*, not an object (bit migration 0002 once).
 
 ## Not built
-- `/fresher/*`, HR finder, settings and logs APIs, Telegram pings.
+- Apollo: its free plan has no API access to people search, so it isn't in the HR finder.

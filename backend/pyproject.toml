@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "alembic>=1.20.1",
+    "dnspython>=2.9.2",
     "dotenv>=0.9.9",
     "fastapi>=0.138.0",
     "httpx>=0.28.1",
@@ -39,6 +40,7 @@ select = ["E", "F", "I", "B", "UP", "FAST"]
 "tests/**" = ["E501"]
 
 [tool.pyright]
+pythonVersion = "3.14"
 venvPath = "."
 venv = ".venv"
 exclude = [".venv", "alembic/versions"]

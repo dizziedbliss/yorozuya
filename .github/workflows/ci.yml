@@ -78,7 +78,22 @@ jobs:
         with:
           node-version: 22
 
-      - run: |
-          cd frontend 
-          npm ci 
-          npm run build
+      - name: Install
+        working-directory: frontend
+        run: npm ci
+
+      - name: Typecheck
+        working-directory: frontend
+        run: npm run typecheck
+
+      - name: Lint
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Tests
+        working-directory: frontend
+        run: npm test
+
+      - name: Build
+        working-directory: frontend
+        run: npx vite build

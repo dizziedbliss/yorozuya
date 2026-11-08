@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import curated, health
+from routers import curated, fresher, health, logs, settings
 
 app = FastAPI(title="Yorozuya")
 
@@ -22,9 +22,6 @@ app.add_middleware(
 
 app.include_router(health.router)
 app.include_router(curated.router)
-
-
-@app.get("/jobs", tags=["legacy"])
-async def legacy_jobs() -> list[dict]:
-    """v1 route the live frontend still calls. Public until the stage 4 frontend sends the passphrase."""
-    return await curated.fetch_curated()
+app.include_router(fresher.router)
+app.include_router(settings.router)
+app.include_router(logs.router)

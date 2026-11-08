@@ -179,3 +179,24 @@ def test_india_beats_remote_anywhere_which_beats_region_locked_remote():
 def test_fresh_grad_in_the_title_counts_as_a_level_signal():
     result = score_fresher("Backend Engineer – GTM Engineering (Fresh grad, 2026)", "", "Bengaluru")
     assert "new grad" in result.matched
+
+
+def test_the_breakdown_adds_up_to_the_score_and_names_every_part():
+    cases = [
+        (
+            "DevOps Intern",
+            "Freshers welcome.\nRequirements:\nDocker, Kubernetes, Terraform, Python, Go, AWS, Linux, Helm.",
+            "Bengaluru",
+        ),
+        ("Software Engineer, New Grad", "We use JavaScript.", "Bangalore"),
+        ("Backend Intern", "", "Remote - USA"),
+    ]
+    for title, jd, where in cases:
+        result = score_fresher(title, jd, where)
+        assert sum(points for _, points in result.breakdown) == result.score, title
+
+    devops = score_fresher(*cases[0])
+    labels = [label for label, _ in devops.breakdown]
+    assert "role: devops" in labels and "level: intern" in labels
+    assert "jd: freshers welcome" in labels and "location: bengaluru" in labels
+    assert ("your stack (capped)", 60) in devops.breakdown

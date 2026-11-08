@@ -20,5 +20,37 @@ def html_to_text(raw: str | None) -> str:
         text = _TAG.sub("", text)
         text = html.unescape(text)
     text = _SPACES.sub(" ", text)
-    lines = [line.strip() for line in text.splitlines()]
-    return _BLANK_LINES.sub("\n\n", "\n".join(lines)).strip()
+    return _BLANK_LINES.sub(
+        "\n\n", "\n".join(_tidy_bullets([line.strip() for line in text.splitlines()]))
+    ).strip()
+
+
+def _tidy_bullets(lines: list[str]) -> list[str]:
+    """`<li>\\n<p>text</p>` leaves a bare "•" line: pull the text up onto it, and keep list items together."""
+    joined: list[str] = []
+    waiting = False
+    for line in lines:
+        if line == "•":
+            waiting = True
+            continue
+        if waiting:
+            if not line:
+                continue
+            line, waiting = f"• {line}", False
+        joined.append(line)
+
+    # The next non-empty line after each index, found in one backwards pass (descriptions are outside input).
+    next_text = [""] * len(joined)
+    upcoming = ""
+    for i in range(len(joined) - 1, -1, -1):
+        next_text[i] = upcoming
+        if joined[i]:
+            upcoming = joined[i]
+
+    out: list[str] = []
+    for i, line in enumerate(joined):
+        prev = out[-1] if out else ""
+        if not line and prev.startswith("• ") and next_text[i].startswith("• "):
+            continue
+        out.append(line)
+    return out
