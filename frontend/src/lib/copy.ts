@@ -28,6 +28,20 @@ export const COPY = {
   wanted: "interns and fresh grads for SRE, DevOps, platform, cloud, backend and fullstack.",
   where: "Bengaluru, Chennai, India remote, or remote from anywhere.",
   noHr: "HR is in witness protection. couldn't find em.",
+  poster: {
+    missingTitle: "this job left the building.",
+    missingBody: "no job with that number. maybe it was never real. like your weekend plans.",
+    back: "Back to the jobs",
+    vanished: "this listing vanished from the board. ghosted.",
+    shoot: "Shoot your shot",
+    appliedToast: "opened their form and filed it under Receipts.",
+    emailedStamp: "SLID IN",
+    emailedToast: "marked as emailed, it's in Receipts.",
+    asking: "asking Hunter nicely…",
+    nobody: "Nobody home",
+    findHr: "Find HR",
+    verdict: { clean: "green flags only. shoot your shot.", caution: "proceed with caution.", mixed: "mostly fine, read the fine print." },
+  },
   noJd: "they posted a job with no description. bold. mysterious. sus.",
 } as const;
 
