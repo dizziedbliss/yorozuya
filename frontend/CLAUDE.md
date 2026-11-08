@@ -28,3 +28,5 @@
 ## Gotchas
 - A `<output>` element has the `status` role too: find the toast by name (`Notifications`).
 - `react-router` is pinned to v7: v8 needs newer docs than Context7 had when this was built.
+- The Vercel project has no framework preset; `vercel.json` pins `framework: vite` and
+  `outputDirectory: dist`. Without them Vercel looks for `build/` and fails after a green build.
