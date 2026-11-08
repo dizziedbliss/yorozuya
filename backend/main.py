@@ -1,17 +1,15 @@
-import asyncio
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from services.greenhouse import get_greenhouse_jobs
-from ranking.variables import companies
 
+from routers import curated, fresher, health, logs, settings
 
-app = FastAPI()
+app = FastAPI(title="Yorozuya")
 
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://yorozuya.dizziedbliss.lol",
-    "https://yorozuya-rho.vercel.app"
+    "https://yorozuya-rho.vercel.app",
 ]
 
 app.add_middleware(
@@ -22,29 +20,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/jobs")
-async def get_jobs():
-
-    tasks = [    
-            get_greenhouse_jobs(company)
-            for company in companies        
-    ]
-
-    results = await asyncio.gather(
-        *tasks,
-        return_exceptions=True
-    )
-
-    all_jobs = []
-
-    for result in results:
-
-        if isinstance(result, Exception):
-            print(result)
-            continue
-
-        all_jobs.extend(result)
-
-    all_jobs.sort(key=lambda x: x["score"], reverse=True)
-
-    return all_jobs
+app.include_router(health.router)
+app.include_router(curated.router)
+app.include_router(fresher.router)
+app.include_router(settings.router)
+app.include_router(logs.router)

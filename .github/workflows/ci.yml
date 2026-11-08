@@ -4,13 +4,53 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: yorozuya
+          POSTGRES_PASSWORD: yorozuya
+          POSTGRES_DB: yorozuya
+        ports:
+          - 5433:5432
+        options: >-
+          --health-cmd "pg_isready -U yorozuya"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 20
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
+
+      - name: Install
+        run: uv sync --frozen
+
+      - name: Lint
+        run: uv run ruff check . && uv run ruff format --check .
+
+      - name: Typecheck
+        run: npx --yes pyright@1.1.414
+
+      - name: Tests
+        run: uv run pytest -q
+
   backend:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Building Docker Image
         run: |
@@ -32,13 +72,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
 
-      - run: |
-          cd frontend 
-          npm ci 
-          npm run build
+      - name: Install
+        working-directory: frontend
+        run: npm ci
+
+      - name: Typecheck
+        working-directory: frontend
+        run: npm run typecheck
+
+      - name: Lint
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Tests
+        working-directory: frontend
+        run: npm test
+
+      - name: Build
+        working-directory: frontend
+        run: npx vite build

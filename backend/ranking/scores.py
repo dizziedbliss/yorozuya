@@ -100,4 +100,4 @@ def calculate_score(title, content):
         if keyword in content:
             negative_score += weight
 
-    return title_score*3 + content_score + negative_score
+    return title_score * 3 + content_score + negative_score

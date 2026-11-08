@@ -1,0 +1,193 @@
+{
+ "offset": 0,
+ "limit": 3,
+ "totalFound": 123,
+ "content": [
+  {
+   "id": "744000160306729",
+   "name": "Mid-Market Account Executive",
+   "uuid": "6a1e9971-ad97-4c47-bc23-2a02a7266847",
+   "jobAdId": "9e354521-82fb-4a66-8433-4a2ddfba6597",
+   "defaultJobAd": false,
+   "refNumber": "REF8777V",
+   "company": {
+    "identifier": "Freshworks",
+    "name": "Freshworks"
+   },
+   "releasedDate": "2026-11-06T22:13:23.386Z",
+   "location": {
+    "city": "San Mateo",
+    "region": "CA",
+    "country": "us",
+    "remote": false,
+    "hybrid": true,
+    "hybridDescription": "3x/week onsite (Tues-Thurs)",
+    "latitude": "37.5629917",
+    "longitude": "-122.3255254",
+    "fullLocation": "San Mateo, CA, United States"
+   },
+   "industry": {
+    "id": "it_and_services",
+    "label": "Information Technology And Services"
+   },
+   "department": {},
+   "function": {
+    "id": "sales",
+    "label": "Sales"
+   },
+   "typeOfEmployment": {
+    "id": "permanent",
+    "label": "Full-time"
+   },
+   "experienceLevel": {
+    "id": "associate",
+    "label": "Associate"
+   },
+   "customField": [
+    {
+     "fieldId": "618bba30fa9dfa25d877c58b",
+     "fieldLabel": "Brands",
+     "valueId": "default",
+     "valueLabel": "Freshworks"
+    },
+    {
+     "fieldId": "COUNTRY",
+     "fieldLabel": "Country/Region",
+     "valueId": "us",
+     "valueLabel": "United States"
+    }
+   ],
+   "visibility": "PUBLIC",
+   "ref": "https://api.smartrecruiters.com/v1/companies/Freshworks/postings/744000160306729",
+   "language": {
+    "code": "en",
+    "label": "English",
+    "labelNative": "English (US)"
+   }
+  },
+  {
+   "id": "744000160306549",
+   "name": "Mid-Market Account Executive ",
+   "uuid": "49f284c4-afa8-48c2-95cf-fed11e5effd1",
+   "jobAdId": "91bc277c-d245-4307-8d14-8992f04b97e7",
+   "defaultJobAd": true,
+   "refNumber": "REF8777V",
+   "company": {
+    "identifier": "Freshworks",
+    "name": "Freshworks"
+   },
+   "releasedDate": "2026-11-06T22:11:01.155Z",
+   "location": {
+    "city": "Boston",
+    "region": "MA",
+    "country": "us",
+    "remote": false,
+    "hybrid": true,
+    "hybridDescription": "3x/week oniste (Tues-Thurs)",
+    "latitude": "42.3555076",
+    "longitude": "-71.0565364",
+    "fullLocation": "Boston, MA, United States"
+   },
+   "industry": {
+    "id": "it_and_services",
+    "label": "Information Technology And Services"
+   },
+   "department": {},
+   "function": {
+    "id": "sales",
+    "label": "Sales"
+   },
+   "typeOfEmployment": {
+    "id": "permanent",
+    "label": "Full-time"
+   },
+   "experienceLevel": {
+    "id": "associate",
+    "label": "Associate"
+   },
+   "customField": [
+    {
+     "fieldId": "618bba30fa9dfa25d877c58b",
+     "fieldLabel": "Brands",
+     "valueId": "default",
+     "valueLabel": "Freshworks"
+    },
+    {
+     "fieldId": "COUNTRY",
+     "fieldLabel": "Country/Region",
+     "valueId": "us",
+     "valueLabel": "United States"
+    }
+   ],
+   "visibility": "PUBLIC",
+   "ref": "https://api.smartrecruiters.com/v1/companies/Freshworks/postings/744000160306549",
+   "language": {
+    "code": "en-GB",
+    "label": "English (UK)",
+    "labelNative": "English (UK)"
+   }
+  },
+  {
+   "id": "744000160304849",
+   "name": "Mid-Market Account Manager",
+   "uuid": "4ec92bf8-2ee6-410e-92e9-09fb5a7e8bc3",
+   "jobAdId": "2de7f51b-c29a-476b-83f8-2e9c75098a04",
+   "defaultJobAd": false,
+   "refNumber": "REF8778B",
+   "company": {
+    "identifier": "Freshworks",
+    "name": "Freshworks"
+   },
+   "releasedDate": "2026-11-06T21:51:12.828Z",
+   "location": {
+    "city": "San Mateo",
+    "region": "CA",
+    "country": "us",
+    "remote": false,
+    "hybrid": true,
+    "hybridDescription": "3x/week oniste (Tues-Thurs)",
+    "latitude": "37.5629917",
+    "longitude": "-122.3255254",
+    "fullLocation": "San Mateo, CA, United States"
+   },
+   "industry": {
+    "id": "it_and_services",
+    "label": "Information Technology And Services"
+   },
+   "department": {},
+   "function": {
+    "id": "sales",
+    "label": "Sales"
+   },
+   "typeOfEmployment": {
+    "id": "permanent",
+    "label": "Full-time"
+   },
+   "experienceLevel": {
+    "id": "associate",
+    "label": "Associate"
+   },
+   "customField": [
+    {
+     "fieldId": "618bba30fa9dfa25d877c58b",
+     "fieldLabel": "Brands",
+     "valueId": "default",
+     "valueLabel": "Freshworks"
+    },
+    {
+     "fieldId": "COUNTRY",
+     "fieldLabel": "Country/Region",
+     "valueId": "us",
+     "valueLabel": "United States"
+    }
+   ],
+   "visibility": "PUBLIC",
+   "ref": "https://api.smartrecruiters.com/v1/companies/Freshworks/postings/744000160304849",
+   "language": {
+    "code": "en",
+    "label": "English",
+    "labelNative": "English (US)"
+   }
+  }
+ ]
+}
